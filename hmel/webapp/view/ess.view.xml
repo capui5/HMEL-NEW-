@@ -1,0 +1,1399 @@
+<mvc:View
+    controllerName="hmel.controller.ess"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:m="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.ui.unified"
+    xmlns:t="sap.ui.table"
+    xmlns:upload="sap.m.upload"
+    xmlns:tnt="sap.tnt"
+    xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+>
+    <SplitContainer
+        id="SplitContDemo"
+        initialDetail="detail"
+        initialMaster="master"
+    >
+        <masterPages>
+            <Page
+                id="master"
+                backgroundDesign="List"
+                class="masterPage"
+            >
+                <!-- Top Toolbar with Logo -->
+                <Toolbar design="Transparent">
+                    <Button
+                        icon="sap-icon://nav-back"
+                        press="onNavBack"
+                    />
+                    <Title text="My Financials" />
+                    <ToolbarSpacer />
+                </Toolbar>
+
+                <!-- Main Content -->
+                <customHeader>
+                    <!-- Bottom Toolbar with Nav Button and Title -->
+
+                    <Toolbar design="Transparent">
+                        <Image
+                            src="./images/logo.jpg"
+                            width="40px"
+                            height="30px"
+                        />
+                    </Toolbar>
+                </customHeader>
+
+                <content>
+                    <List itemPress="onListItemPress">
+                        <items>
+                            <StandardListItem
+                                title="Create Medi Claim Request"
+                                type="Active"
+                                custom:to="detail"
+                            />
+                            <StandardListItem
+                                title="Manage Claim"
+                                type="Active"
+                                custom:to="detail1"
+                            />
+                            <StandardListItem
+                                title="Claim Reports"
+                                type="Active"
+                                custom:to="detail2"
+                            />
+                        </items>
+                    </List>
+                </content>
+            </Page>
+        </masterPages>
+        <detailPages>
+            <Page
+                id="detail"
+                title="Create Medi Claim Request"
+                backgroundDesign="Solid"
+                showNavButton="{= !${device>/system/desktop}}"
+                navButtonPress=".onPressDetailBack"
+                class="detailPage"
+            >
+                <content>
+                    <IconTabBar
+                        id="myIconTabBar"
+                        class="sapUiResponsiveContentPadding sapUiResponsivePadding--header tabbar"
+                        selectedKey="{/selectedTab}"
+                        select="onTabSelect"
+                    >
+                        <items>
+                            <IconTabFilter
+                                key="claimDetails"
+                                text="Claim Details"
+                            >
+                                <f:Form
+                                    id="FormChange355"
+                                    editable="true"
+                                    class="returnFormClass"
+                                >
+                                    <f:layout>
+                                        <f:ResponsiveGridLayout
+                                            breakpointXL="1000"
+                                            labelSpanXL="1"
+                                            labelSpanL="1"
+                                            labelSpanM="1"
+                                            labelSpanS="12"
+                                            adjustLabelSpan="false"
+                                            emptySpanXL="0"
+                                            emptySpanL="0"
+                                            emptySpanM="0"
+                                            emptySpanS="0"
+                                            columnsXL="5"
+                                            columnsL="1"
+                                            columnsM="1"
+                                            singleContainerFullSize="true"
+                                        />
+                                    </f:layout>
+                                    <f:formContainers>
+                                        <f:FormContainer>
+                                            <f:formElements>
+                                                <f:FormElement>
+                                                    <f:fields>
+                                                        <VBox
+                                                            class="spacingAfter"
+                                                        >
+                                                            <Label
+                                                                text="Claim Type"
+                                                                class="label"
+                                                                required="true"
+                                                            />
+                                                            <ComboBox
+                                                                items="{
+        path: 'MainModel>/T77WWW_CLHLDCOT',
+        filters: [{ path: 'CSFLD', operator: 'EQ', value1: 'C40T4' }]
+    }"
+                                                                id="CT"
+                                                                width="400px"
+                                                            >
+                                                                <core:Item
+                                                                    key="{MainModel>SOVAL}"
+                                                                    text="{MainModel>SOVAL}"
+                                                                />
+                                                            </ComboBox>
+                                                        </VBox>
+                                                        <VBox
+                                                            class="spacingAfter"
+                                                        >
+                                                            <Label
+                                                                text="Treatment Type"
+                                                                class="label"
+                                                                required="true"
+                                                            />
+                                                            <ComboBox
+                                                                items="{
+        path: 'MainModel>/T77WWW_CLHLDCOT',
+        filters: [{ path: 'CSFLD', operator: 'EQ', value1: 'C20T5' }]
+    }"
+                                                                id="TT"
+                                                                width="400px"
+                                                            >
+                                                                <core:Item
+                                                                    key="{MainModel>SOVAL}"
+                                                                    text="{MainModel>SOVAL}"
+                                                                />
+                                                            </ComboBox>
+                                                        </VBox>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:fields>
+                                                        <VBox
+                                                            class="spacingAfter"
+                                                        >
+                                                            <Label
+                                                                text="Claim Start Date"
+                                                                class="label"
+                                                                required="true"
+                                                            />
+                                                            <DatePicker
+                                                                id="startDatePicker1"
+                                                                width="400px"
+                                                                value="{/startDate}"
+                                                                change="handleStartDateChange"
+                                                            />
+                                                        </VBox>
+                                                        <VBox
+                                                            class="spacingAfter"
+                                                        >
+                                                            <Label
+                                                                text="Claim End Date"
+                                                                class="label"
+                                                                required="true"
+                                                            />
+                                                            <DatePicker
+                                                                id="endDatePicker1"
+                                                                width="400px"
+                                                                value="{/endDate}"
+                                                                change="handleEndDateChange"
+                                                            />
+                                                        </VBox>
+                                                    </f:fields>
+                                                </f:FormElement>
+                                                <f:FormElement>
+                                                    <f:fields>
+                                                        <VBox
+                                                            class="spacingAfter"
+                                                        >
+                                                            <Label
+                                                                text="Treatment For"
+                                                                class="label"
+                                                                required="true"
+                                                            />
+                                                            <ComboBox
+                                                                items="{
+        path: 'MainModel>/T77WWW_CLHLDCOT',
+        filters: [{ path: 'CSFLD', operator: 'EQ', value1: 'C40T5' }]
+    }"
+                                                                id="TF"
+                                                                width="400px"
+                                                                change="onTreatmentChange"
+                                                            >
+                                                                <core:Item
+                                                                    key="{MainModel>SOVAL}"
+                                                                    text="{MainModel>SOVAL}"
+                                                                />
+                                                            </ComboBox>
+                                                        </VBox>
+                                                        <VBox
+                                                            class="spacingAfter"
+                                                        >
+                                                            <Label
+                                                                text="Treatment For (If Other)"
+                                                                class="label"
+                                                            />
+                                                            <Input
+                                                                id="TreatmentForOther"
+                                                                liveChange="ValidateClaimFields"
+                                                                valueState="{/productNameState}"
+                                                                width="400px"
+                                                            />
+                                                        </VBox>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:fields>
+                                                        <VBox
+                                                            class="spacingAfter"
+                                                        >
+                                                            <Label
+                                                                text="Policy Number"
+                                                                class="label"
+                                                            />
+                                                            <Select
+                                                                items="{
+                                                                 path: 'MainModel>/ZHRMED_POLICY'
+                                                                 }"
+                                                                id="PolicyNumber"
+                                                                width="400px"
+                                                            >
+                                                                <core:Item
+                                                                    key="{MainModel>POLICYNO}"
+                                                                    text="{MainModel>POLICYNO}"
+                                                                />
+                                                            </Select>
+                                                        </VBox>
+                                                    </f:fields>
+                                                </f:FormElement>
+
+                                                <f:FormElement>
+                                                    <f:fields>
+                                                        <VBox
+                                                            class="spacingAfter"
+                                                        >
+                                                            <Label
+                                                                text="Select Dependents"
+                                                                class="label"
+                                                                required="true"
+                                                            />
+                                                            <ComboBox
+                                                                items="{
+        path: 'MainModel>/T77WWW_CLMLDCOT',
+        filters: [{ path: 'SOVAL', operator: 'EQ', value1: 'SELF' }]
+    }"
+                                                                id="SD"
+                                                                width="400px"
+                                                            >
+                                                                <core:Item
+                                                                    key="{MainModel>SOVAL}"
+                                                                    text="{MainModel>SOVAL}"
+                                                                />
+                                                            </ComboBox>
+                                                        </VBox>
+                                                    </f:fields>
+                                                </f:FormElement>
+                                                <f:FormElement>
+                                                    <f:fields>
+                                                        <VBox
+                                                            class="spacingAfter"
+                                                        >
+                                                            <CheckBox
+                                                                text="Test Report"
+                                                                id="Availability"
+                                                                selected="true"
+                                                            />
+
+                                                            <CheckBox
+                                                                text="Document Prescription"
+                                                                id="prescription"
+                                                                selected="true"
+                                                            />
+
+                                                            <CheckBox
+                                                                text="Original Bill"
+                                                                id="originalbill"
+                                                                selected="true"
+                                                            />
+                                                        </VBox>
+                                                    </f:fields>
+                                                </f:FormElement>
+                                            </f:formElements>
+                                        </f:FormContainer>
+                                    </f:formContainers>
+                                </f:Form>
+                            </IconTabFilter>
+                            <IconTabFilter
+                                key="Create"
+                                text="Hospitalization Details"
+                            >
+                                <Panel>
+                                    <f:Form
+                                        id="FormChange352"
+                                        editable="true"
+                                        class="returnFormClass"
+                                    >
+                                        <f:layout>
+                                            <f:ResponsiveGridLayout
+                                                breakpointXL="1000"
+                                                labelSpanXL="1"
+                                                labelSpanL="1"
+                                                labelSpanM="1"
+                                                labelSpanS="12"
+                                                adjustLabelSpan="false"
+                                                emptySpanXL="0"
+                                                emptySpanL="0"
+                                                emptySpanM="0"
+                                                emptySpanS="0"
+                                                columnsXL="5"
+                                                columnsL="1"
+                                                columnsM="1"
+                                                singleContainerFullSize="true"
+                                            />
+                                        </f:layout>
+                                        <f:formContainers>
+                                            <f:FormContainer>
+                                                <f:formElements>
+                                                    <f:FormElement>
+                                                        <f:fields>
+                                                            <VBox
+                                                                class="spacingAfter"
+                                                            >
+                                                                <Label
+                                                                    text="Consultancy Category"
+                                                                    class="label"
+                                                                    required="true"
+                                                                />
+                                                                <ComboBox
+                                                                    change="onComboBoxChange"
+                                                                    id="consultancycategorys"
+                                                                    items="{MainModel>/ZHR_MED_CAT}"
+                                                                    width="330px"
+                                                                >
+                                                                    <core:Item
+                                                                        key="{MainModel>DESCRIPTION}"
+                                                                        text="{MainModel>DESCRIPTION}"
+                                                                    />
+                                                                </ComboBox>
+                                                            </VBox>
+                                                            <VBox
+                                                                class="spacingAfter"
+                                                            >
+                                                                <Label
+                                                                    text="Doctor's Name"
+                                                                    class="label"
+                                                                    required="true"
+                                                                />
+                                                                <Input
+                                                                    id="DN"
+                                                                    liveChange="validateOnlyCharacters"
+                                                                    width="330px"
+                                                                />
+                                                            </VBox>
+                                                            <VBox
+                                                                class="spacingAfter"
+                                                            >
+                                                                <Label
+                                                                    text="Patient ID"
+                                                                    class="label"
+                                                                    required="true"
+                                                                />
+                                                                <Input
+                                                                    id="ID"
+                                                                    liveChange="validateOnlyNumbers"
+                                                                    width="330px"
+                                                                />
+                                                            </VBox>
+                                                        </f:fields>
+                                                    </f:FormElement>
+
+                                                    <f:FormElement>
+                                                        <f:fields>
+                                                            <VBox
+                                                                class="spacingAfter"
+                                                            >
+                                                                <Label
+                                                                    text="Hospital/Medical Store"
+                                                                    class="label"
+                                                                    required="true"
+                                                                />
+                                                                <ComboBox
+                                                                    items="{
+                                                        path: 'MainModel>/T77WWW_CLMLDCOT',
+                                                        filters: [{ path: 'CSFLD', operator: 'EQ', value1: 'C40T3' }]
+    }"
+                                                                    id="HospitalStore"
+                                                                    width="330px"
+                                                                >
+                                                                    <core:Item
+                                                                        key="{MainModel>SOVAL}"
+                                                                        text="{MainModel>SOVAL}"
+                                                                    />
+                                                                </ComboBox>
+                                                            </VBox>
+                                                            <VBox
+                                                                class="spacingAfter"
+                                                            >
+                                                                <Label
+                                                                    text="Hospital Location"
+                                                                    class="label"
+                                                                    required="true"
+                                                                />
+                                                                <ComboBox
+                                                                    items="{
+                                                        path: 'MainModel>/T77WWW_CLMLDCOT',
+                                                        filters: [{ path: 'CSFLD', operator: 'EQ', value1: 'C40T4' },{ path: 'RETYP', operator: 'EQ', value1: 'ZMIN' }]
+    }"
+                                                                    id="Hospitallocation"
+                                                                    width="330px"
+                                                                    change="onHospitalLocationChange"
+                                                                >
+                                                                    <core:Item
+                                                                        key="{MainModel>SOVAL}"
+                                                                        text="{MainModel>SOVAL}"
+                                                                    />
+                                                                </ComboBox>
+                                                            </VBox>
+                                                            <VBox
+                                                                class="spacingAfter"
+                                                            >
+                                                                <Label
+                                                                    text="Hospital Location(If Other)"
+                                                                    class="label"
+                                                                />
+                                                                <Input
+                                                                    id="HL"
+                                                                    liveChange="validateOnlyCharacters"
+                                                                    width="330px"
+                                                                />
+                                                            </VBox>
+                                                        </f:fields>
+                                                    </f:FormElement>
+                                                    <f:FormElement>
+                                                        <f:fields>
+                                                            <VBox
+                                                                class="spacingAfter"
+                                                            >
+                                                                <Label
+                                                                    text="Bill Date"
+                                                                    class="label"
+                                                                    required="true"
+                                                                />
+                                                                <DatePicker
+                                                                    id="billdate"
+                                                                    width="330px"
+                                                                    change="onBillDateChange"
+                                                                    valueFormat="yyyy-MM-dd"
+                                                                />
+                                                            </VBox>
+                                                            <VBox
+                                                                class="spacingAfter"
+                                                            >
+                                                                <Label
+                                                                    text="Bill No"
+                                                                    class="label"
+                                                                    required="true"
+                                                                />
+                                                                <Input
+                                                                    id="billno"
+                                                                    width="330px"
+                                                                />
+                                                            </VBox>
+                                                            <VBox
+                                                                class="spacingAfter"
+                                                            >
+                                                                <Label
+                                                                    text="Bill Amount(Rs)"
+                                                                    class="label"
+                                                                    required="true"
+                                                                />
+                                                                <Input
+                                                                    id="billamount"
+                                                                    liveChange="handleBillAmountChange"
+                                                                    width="330px"
+                                                                />
+                                                            </VBox>
+                                                        </f:fields>
+                                                    </f:FormElement>
+
+                                                    <f:FormElement>
+                                                        <f:fields>
+                                                            <VBox
+                                                                class="spacingAfter"
+                                                            >
+                                                                <Label
+                                                                    text="Discount(Rs)"
+                                                                    class="label"
+                                                                />
+                                                                <Input
+                                                                    id="discount"
+                                                                    liveChange="handleDiscountChange"
+                                                                    width="330px"
+                                                                />
+                                                            </VBox>
+                                                            <VBox
+                                                                class="spacingAfter"
+                                                            >
+                                                                <Label
+                                                                    text="Requested Amount"
+                                                                    class="label"
+                                                                />
+                                                                <Input
+                                                                    id="requestamount"
+                                                                    width="330px"
+                                                                    editable="false"
+                                                                />
+                                                            </VBox>
+                                                            <VBox
+                                                                class="spacingAfter"
+                                                            >
+                                                                <Label
+                                                                    text="Description/Remark"
+                                                                    class="label"
+                                                                />
+                                                                <Input
+                                                                    id="description"
+                                                                    width="330px"
+                                                                />
+                                                            </VBox>
+                                                        </f:fields>
+                                                    </f:FormElement>
+                                                    <f:FormElement>
+                                                        <f:fields>
+                                                            <VBox
+                                                                class="spacingAfter"
+                                                            >
+                                                                <CheckBox
+                                                                    text="I Acknowledge &amp; Accept Terms and Conditions"
+                                                                    id="Accept"
+                                                                />
+                                                            </VBox>
+                                                        </f:fields>
+                                                    </f:FormElement>
+                                                </f:formElements>
+                                            </f:FormContainer>
+                                        </f:formContainers>
+                                    </f:Form>
+
+                                    <HBox>
+                                        <!-- Left-aligned buttons -->
+                                        <VBox>
+                                            <HBox>
+                                                <Button
+                                                    id="button"
+                                                    text="Add"
+                                                    press="addPress"
+                                                    class="add"
+                                                />
+
+                                                <Button
+                                                    id="button2"
+                                                    text="Delete"
+                                                    press="deletePress"
+                                                    class="add"
+                                                />
+
+                                                <Button
+                                                    id="button3"
+                                                    text="Edit"
+                                                    press="EditPress"
+                                                    class="add"
+                                                />
+
+                                                <Button
+                                                    text="Update"
+                                                    id="buttonUpdate"
+                                                    press="UpdatePress"
+                                                    visible="false"
+                                                    class="add"
+                                                />
+
+                                                <Button
+                                                    text="Cancel"
+                                                    id="buttonCancel"
+                                                    press="CancelPress"
+                                                    visible="false"
+                                                    class="add"
+                                                />
+
+                                                <Button
+                                                    id="button4"
+                                                    text="Clone"
+                                                    press="clonePress"
+                                                    class="add"
+                                                />
+                                            </HBox>
+                                        </VBox>
+
+                                        <VBox justifyContent="End">
+                                            <Label
+                                                id="totalRequestedAmountLabel"
+                                                text="Total Requested Amount:"
+                                                class="requestlabel"
+                                            />
+                                        </VBox>
+                                    </HBox>
+                                </Panel>
+
+                                <Panel>
+                                    <List
+                                        id="detailsList"
+                                        items="{claimModel>/allDetails}"
+                                        mode="MultiSelect"
+                                    >
+                                        <items>
+                                            <CustomListItem>
+                                                <HBox>
+                                                    <VBox>
+                                                        <Label
+                                                            text="Consultancy Category:"
+                                                            class="detaillabel"
+                                                        />
+                                                        <Label
+                                                            text="Doctor's Name:"
+                                                            class="detaillabel"
+                                                        />
+                                                        <Label
+                                                            text="Patient ID:"
+                                                            class="detaillabel"
+                                                        />
+                                                        <Label
+                                                            text="Hospital/Medical Store:"
+                                                            class="detaillabel"
+                                                        />
+                                                        <Label
+                                                            text="Hospital Location:"
+                                                            class="detaillabel"
+                                                        />
+                                                        <Label
+                                                            text="Hospital Location (If Other):"
+                                                            class="detaillabel"
+                                                        />
+                                                        <Label
+                                                            text="Bill Date:"
+                                                            class="detaillabel"
+                                                        />
+                                                        <Label
+                                                            text="Bill No:"
+                                                            class="detaillabel"
+                                                        />
+                                                        <Label
+                                                            text="Bill Amount(Rs):"
+                                                            class="detaillabel"
+                                                        />
+                                                        <Label
+                                                            text="Discount(Rs):"
+                                                            class="detaillabel"
+                                                        />
+                                                        <Label
+                                                            text="Requested Amount:"
+                                                            class="detaillabel"
+                                                            id="requestedAmount"
+                                                        />
+                                                        <Label
+                                                            text="Description/Remark:"
+                                                            class="detaillabel"
+                                                        />
+                                                    </VBox>
+                                                    <VBox>
+                                                        <Text
+                                                            text="{claimModel>category}"
+                                                            class="detail"
+                                                        />
+                                                        <Text
+                                                            text="{claimModel>doctor}"
+                                                            class="detail"
+                                                        />
+                                                        <Text
+                                                            text="{claimModel>patientId}"
+                                                            class="detail"
+                                                        />
+                                                        <Text
+                                                            text="{claimModel>hospitalStore}"
+                                                            class="detail"
+                                                        />
+                                                        <Text
+                                                            text="{claimModel>hospitalLocation}"
+                                                            class="detail"
+                                                        />
+                                                        <Text
+                                                            text="{claimModel>hospitalLocationOther}"
+                                                            class="detail"
+                                                        />
+                                                        <Text
+                                                            text="{path: 'claimModel>billDate', formatter: '.formatDate'}"
+                                                            class="detail"
+                                                        />
+                                                        <Text
+                                                            text="{claimModel>billNo}"
+                                                            class="detail"
+                                                        />
+                                                        <Text
+                                                            text="{claimModel>billAmount}"
+                                                            class="detail"
+                                                        />
+                                                        <Text
+                                                            text="{claimModel>discount}"
+                                                            class="detail"
+                                                        />
+                                                        <Text
+                                                            text="{claimModel>requestedAmount}"
+                                                            class="detail"
+                                                        />
+                                                        <Text
+                                                            text="{claimModel>review}"
+                                                            class="detail"
+                                                        />
+                                                    </VBox>
+                                                </HBox>
+                                            </CustomListItem>
+                                        </items>
+                                    </List>
+                                </Panel>
+                            </IconTabFilter>
+
+                            <IconTabFilter
+                                key="Attachhments"
+                                text="Attachments"
+                            >
+                                <Panel>
+                                    <upload:UploadSetwithTable
+                                        id="UploadSetTable"
+                                        sticky="ColumnHeaders,HeaderToolbar"
+                                        width="auto"
+                                        mode="MultiSelect"
+                                        fixedLayout="false"
+                                        inset="true"
+                                        autoPopinMode="true"
+                                        hiddenInPopin="None"
+                                        items="{path: '/items', templateShareable: false}"
+                                        maxFileNameLength="60"
+                                        uploadUrl="/CLAIM_DETAILS"
+                                        multiple="true"
+                                        beforeInitiatingItemUpload="onBeforeInitiatingItemUpload"
+                                        beforeUploadStarts="onBeforeUploadStarts"
+                                        selectionChange="onSelectionChange"
+                                        itemRenamed="onDocumentRenamedSuccess"
+                                        uploadCompleted="onUploadCompleted"
+                                    >
+                                        <!-- ToolBar for UploadSetwithTable -->
+                                        <upload:headerToolbar>
+                                            <OverflowToolbar>
+                                                <Title
+                                                    text="Attachments"
+                                                    level="H2"
+                                                />
+                                                <ToolbarSpacer />
+                                                <SearchField
+                                                    width="20%"
+                                                    liveChange=".onSearch"
+                                                >
+                                                    <layoutData>
+                                                        <OverflowToolbarLayoutData
+                                                            priority="NeverOverflow"
+                                                        />
+                                                    </layoutData>
+                                                </SearchField>
+                                                <ToolbarSeparator />
+                                                <upload:ActionsPlaceholder
+                                                    placeholderFor="UploadButtonPlaceholder"
+                                                />
+                                                <Button
+                                                    id="downloadSelectedButton"
+                                                    text="Download"
+                                                    enabled="false"
+                                                    press="onDownloadFiles"
+                                                />
+                                                <MenuButton text="Add">
+                                                    <menu>
+                                                        <Menu>
+                                                            <MenuItem
+                                                                text="URL"
+                                                                press="openAddOrEditDialog"
+                                                            />
+                                                            <MenuItem
+                                                                text="Document Without File"
+                                                                press=".openDocumentWithoutFileDialog"
+                                                            />
+                                                        </Menu>
+                                                    </menu>
+                                                    <layoutData>
+                                                        <OverflowToolbarLayoutData
+                                                            priority="AlwaysOverflow"
+                                                        />
+                                                    </layoutData>
+                                                </MenuButton>
+                                                <Button
+                                                    id="removeDocumentButton"
+                                                    text="Remove"
+                                                    press=".onRemoveButtonFromMenuDocumentHandler"
+                                                    enabled="false"
+                                                >
+                                                    <layoutData>
+                                                        <OverflowToolbarLayoutData
+                                                            priority="AlwaysOverflow"
+                                                        />
+                                                    </layoutData>
+                                                </Button>
+                                                <Button
+                                                    id="renameButton"
+                                                    enabled="false"
+                                                    press="onRenameDocument"
+                                                    text="Rename"
+                                                >
+                                                    <layoutData>
+                                                        <OverflowToolbarLayoutData
+                                                            priority="AlwaysOverflow"
+                                                        />
+                                                    </layoutData>
+                                                </Button>
+                                                <Button
+                                                    id="editUrlButton"
+                                                    text="Edit URL"
+                                                    enabled="false"
+                                                    press="onEditUrl"
+                                                >
+                                                    <layoutData>
+                                                        <OverflowToolbarLayoutData
+                                                            priority="AlwaysOverflow"
+                                                        />
+                                                    </layoutData>
+                                                </Button>
+                                            </OverflowToolbar>
+                                        </upload:headerToolbar>
+
+                                        <!-- Columns for UploadSetwithTable -->
+                                        <upload:columns>
+                                            <upload:Column
+                                                id="fileName"
+                                                importance="High"
+                                            >
+                                                <upload:header>
+                                                    <Label text="Actions" />
+                                                </upload:header>
+                                            </upload:Column>
+                                            <upload:Column id="id">
+                                                <upload:header>
+                                                    <Label text="Line Number" />
+                                                </upload:header>
+                                            </upload:Column>
+                                            <upload:Column id="revision">
+                                                <upload:header>
+                                                    <Label text="File Name" />
+                                                </upload:header>
+                                            </upload:Column>
+                                            <upload:Column id="status">
+                                                <upload:header>
+                                                    <Label
+                                                        text="File Extensions"
+                                                    />
+                                                </upload:header>
+                                            </upload:Column>
+                                            <upload:Column id="fileSize">
+                                                <upload:header>
+                                                    <Label
+                                                        text="Attachments File Size"
+                                                    />
+                                                </upload:header>
+                                            </upload:Column>
+                                            <upload:Column id="Invalid">
+                                                <upload:header>
+                                                    <Label text="Invalid" />
+                                                </upload:header>
+                                            </upload:Column>
+                                            <upload:Column
+                                                id="actionButton"
+                                                importance="High"
+                                            />
+                                        </upload:columns>
+
+                                        <!-- Items aggregation with template UploadSetwithTableItem definition for each row -->
+                                        <upload:items>
+                                            <upload:UploadSetwithTableItem
+                                                fileName="{fileName}"
+                                                mediaType="{mediaType}"
+                                                url="{url}"
+                                                highlight="{=${uploadState} === 'Complete' ? 'Indication05' : null }"
+                                                previewable="{previewable}"
+                                                fileSize="{fileSize}"
+                                            >
+                                                <!-- Cells with cell template defining content for each column (cells and columns work with 1:1 mapping) -->
+                                                <upload:cells>
+                                                    <HBox>
+                                                        <Image
+                                                            src="{imageUrl}"
+                                                            class="sapMUSTItemImage sapMUSTItemIcon"
+                                                            visible="{= ${imageUrl} !== undefined}"
+                                                        />
+                                                        <core:Icon
+                                                            src="{parts: ['mediaType', 'fileName'], formatter: '.getIconSrc' }"
+                                                            color="white"
+                                                            visible="{= ${imageUrl} === undefined || ${imageUrl} === '' }"
+                                                            class="sapMUSTItemImage sapMUSTItemIcon"
+                                                        />
+                                                        <VBox
+                                                            class="sapUiTinyMargin sapUiSmallMarginBegin"
+                                                        >
+                                                            <Link
+                                                                text="{fileName}"
+                                                                press="openPreview"
+                                                                class="sapUiTinyMarginBottom"
+                                                            />
+                                                            <Text
+                                                                text="{documentType}"
+                                                                class="sapUiTinyMarginTop"
+                                                            />
+                                                        </VBox>
+                                                    </HBox>
+                                                    <Text text="{id}" />
+                                                    <Link text="{revision}" />
+                                                    <Text text="{status}" />
+                                                    <Text
+                                                        text="{parts: ['fileSize'], formatter: '.getFileSizeWithUnits'}"
+                                                    />
+                                                    <VBox>
+                                                        <Text
+                                                            text="{lastModifiedBy}"
+                                                        />
+                                                        <Text
+                                                            class="sapUiTinyMarginTop"
+                                                            text="{lastmodified}"
+                                                        />
+                                                    </VBox>
+                                                    <Button
+                                                        class="sapUiTinyMarginBegin"
+                                                        type="Transparent"
+                                                        icon="sap-icon://decline"
+                                                        press="onRemoveHandler"
+                                                    />
+                                                </upload:cells>
+                                            </upload:UploadSetwithTableItem>
+                                        </upload:items>
+                                    </upload:UploadSetwithTable>
+                                </Panel>
+                            </IconTabFilter>
+
+                            <IconTabFilter
+                                key="review"
+                                text="Review"
+                            >
+                                <VBox class="sapUiSmallMargin">
+                                    <HBox justifyContent="SpaceBetween">
+                                        <Title
+                                            text="Review Details"
+                                            class="reviewlabel"
+                                        />
+                                        <Label
+                                            id="totalRequestedAmount"
+                                            text="Total Requested Amount: "
+                                            class="request"
+                                        />
+                                        <Text
+                                            id="totalRequestedAmountValue"
+                                            class="requesttext"
+                                        />
+                                    </HBox>
+                                    <f:Form
+                                        id="FormDisplay354wideDual"
+                                        editable="false"
+                                    >
+                                        <f:layout>
+                                            <f:ResponsiveGridLayout
+                                                labelSpanXL="4"
+                                                labelSpanL="3"
+                                                labelSpanM="4"
+                                                labelSpanS="12"
+                                                adjustLabelSpan="false"
+                                                emptySpanXL="0"
+                                                emptySpanL="4"
+                                                emptySpanM="0"
+                                                emptySpanS="0"
+                                                columnsXL="2"
+                                                columnsL="1"
+                                                columnsM="1"
+                                                singleContainerFullSize="false"
+                                            />
+                                        </f:layout>
+                                        <f:formContainers>
+                                            <f:FormContainer
+                                                title="Claim Details"
+                                            >
+                                                <f:FormElement>
+                                                    <f:fields>
+                                                        <List>
+                                                            <CustomListItem>
+                                                                <HBox
+                                                                    class="item"
+                                                                >
+                                                                    <VBox>
+                                                                        <Label
+                                                                            text="Claim ID:"
+                                                                            class="detaillabel"
+                                                                            visible="false"
+                                                                        />
+                                                                        <Label
+                                                                            text="Claim Person:"
+                                                                            class="detaillabel"
+                                                                        />
+                                                                        <Label
+                                                                            text="Claim Type:"
+                                                                            class="detaillabel"
+                                                                        />
+                                                                        <Label
+                                                                            text="Claim Start Date:"
+                                                                            class="detaillabel"
+                                                                        />
+                                                                        <Label
+                                                                            text="Claim End Date:"
+                                                                            class="detaillabel"
+                                                                        />
+                                                                        <Label
+                                                                            text="Treatment For:"
+                                                                            class="detaillabel"
+                                                                        />
+                                                                        <Label
+                                                                            text="Treatment For (if others):"
+                                                                            class="detaillabel"
+                                                                        />
+                                                                        <Label
+                                                                            text="Select Dependent:"
+                                                                            class="detaillabel"
+                                                                        />
+                                                                    </VBox>
+                                                                    <VBox>
+                                                                        <Text
+                                                                            text="{claimModel>/claimId}"
+                                                                            class="claimtext"
+                                                                            visible="false"
+                                                                        />
+                                                                        <Text
+                                                                            text="Teja"
+                                                                            class="claimtext"
+                                                                        />
+                                                                        <Text
+                                                                            text="{claimModel>/claimType}"
+                                                                            class="claimtext"
+                                                                            id="claimt"
+                                                                        />
+
+                                                                        <Text
+                                                                            text="{claimModel>/claimStartDate}"
+                                                                            class="claimtext"
+                                                                            id="claimsd"
+                                                                        />
+                                                                        <Text
+                                                                            text="{claimModel>/claimEndDate}"
+                                                                            class="claimtext"
+                                                                            id="claimed"
+                                                                        />
+                                                                        <Text
+                                                                            text="{claimModel>/treatmentFor}"
+                                                                            class="claimtext"
+                                                                            id="claimtf"
+                                                                        />
+                                                                        <Text
+                                                                            text="{claimModel>/treatmentForOther}"
+                                                                            class="claimtext"
+                                                                            id="claimtfo"
+                                                                        />
+                                                                        <Text
+                                                                            text="{claimModel>/selectedDependent}"
+                                                                            class="claimtext"
+                                                                            id="claimsde"
+                                                                        />
+                                                                    </VBox>
+                                                                </HBox>
+                                                            </CustomListItem>
+                                                        </List>
+                                                    </f:fields>
+                                                </f:FormElement>
+                                            </f:FormContainer>
+                                            <f:FormContainer
+                                                title="Hospitalization Details"
+                                            >
+                                                <f:FormElement>
+                                                    <f:fields>
+                                                        <VBox
+                                                            items="{claimModel>/allDetails}"
+                                                        >
+                                                            <CustomListItem>
+                                                                <HBox
+                                                                    class="item"
+                                                                >
+                                                                    <VBox>
+                                                                        <Label
+                                                                            text="Consultancy Category:"
+                                                                            class="detaillabel"
+                                                                        />
+                                                                        <Label
+                                                                            text="Doctor's Name:"
+                                                                            class="detaillabel"
+                                                                        />
+                                                                        <Label
+                                                                            text="Hospital/Medical Store:"
+                                                                            class="detaillabel"
+                                                                        />
+                                                                        <Label
+                                                                            text="Bill Date:"
+                                                                            class="detaillabel"
+                                                                        />
+                                                                        <Label
+                                                                            text="Bill No:"
+                                                                            class="detaillabel"
+                                                                        />
+                                                                        <Label
+                                                                            text="Bill Amount(Rs):"
+                                                                            class="detaillabel"
+                                                                        />
+                                                                        <Label
+                                                                            text="Discount(Rs):"
+                                                                            class="detaillabel"
+                                                                        />
+                                                                        <Label
+                                                                            text="Requested Amount(Rs):"
+                                                                            class="detaillabel"
+                                                                        />
+                                                                    </VBox>
+                                                                    <VBox>
+                                                                        <Text
+                                                                            text="{claimModel>category}"
+                                                                            class="detailtext"
+                                                                            id="hospitalct"
+                                                                        />
+                                                                        <Text
+                                                                            text="{claimModel>doctor}"
+                                                                            class="detailtext"
+                                                                            id="hospitald"
+                                                                        />
+                                                                        <Text
+                                                                            text="{claimModel>hospitalStore}"
+                                                                            class="detailtext"
+                                                                            id="hospitalst"
+                                                                        />
+                                                                        <Text
+                                                                            text="{path: 'claimModel>billDate', formatter: '.formatDate'}"
+                                                                            class="detail"
+                                                                            id="hospitalbd"
+                                                                        />
+                                                                        <Text
+                                                                            text="{claimModel>billNo}"
+                                                                            class="detailtext"
+                                                                            id="hospitalbn"
+                                                                        />
+                                                                        <Text
+                                                                            text="{claimModel>billAmount}"
+                                                                            class="detailtext"
+                                                                            id="hospitalba"
+                                                                        />
+                                                                        <Text
+                                                                            text="{claimModel>discount}"
+                                                                            class="detailtext"
+                                                                            id="discountr"
+                                                                        />
+                                                                        <Text
+                                                                            text="{claimModel>requestedAmount}"
+                                                                            class="detailtext"
+                                                                            id="requestA"
+                                                                        />
+                                                                    </VBox>
+                                                                </HBox>
+                                                            </CustomListItem>
+                                                        </VBox>
+                                                    </f:fields>
+                                                </f:FormElement>
+                                            </f:FormContainer>
+                                        </f:formContainers>
+                                    </f:Form>
+                                </VBox>
+                            </IconTabFilter>
+                        </items>
+                    </IconTabBar>
+                </content>
+
+                <footer>
+                    <OverflowToolbar>
+                        <ToolbarSpacer />
+                        <Button
+                            text="Back"
+                            press="handleBack"
+                            class="Login"
+                            id="BackButton"
+                        />
+                        <Button
+                            text="Next"
+                            press="handleNext"
+                            class="Login"
+                            id="nextButton"
+                            visible="{/isNextButtonVisible}"
+                        />
+                        <Button
+                            text="Submit"
+                            press="handleSubmit"
+                            class="Login"
+                            id="submitButton"
+                            visible="{/isSubmitButtonVisible}"
+                        />
+                    </OverflowToolbar>
+                </footer>
+            </Page>
+            <Page
+                id="detail1"
+                title="Manage Claim"
+                backgroundDesign="Solid"
+                showNavButton="{= !${device>/system/desktop}}"
+                navButtonPress=".onPressDetailBack"
+                class="detailPage"
+            >
+                <Table
+                    id="managetable"
+                    inset="false"
+                    alternateRowColors="true"
+                    items="{MainModel>/ManageClaims}"
+                >
+                    <columns>
+                        <Column>
+                            <Text text="Claim ID" />
+                        </Column>
+                        <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true"
+                        >
+                            <Text text="Person Number" />
+                        </Column>
+                        <Column
+                            minScreenWidth="Desktop"
+                            demandPopin="true"
+                            width="12em"
+                        >
+                            <Text text="Claim Type" />
+                        </Column>
+                        <Column
+                            minScreenWidth="Desktop"
+                            demandPopin="true"
+                            width="12em"
+                        >
+                            <Text text="Treatment For" />
+                        </Column>
+
+                        <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true"
+                        >
+                            <Text text="Select Dependents" />
+                        </Column>
+                        <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true"
+                        >
+                            <Text text="Requested Amount" />
+                        </Column>
+                        <Column
+                            hAlign="Center"
+                            demandPopin="true"
+                        />
+                    </columns>
+                    <items>
+                        <ColumnListItem vAlign="Middle">
+                            <cells>
+                                <Text text="{MainModel>CLAIM_ID}" />
+                                <Text text="{MainModel>PERSON_NUMBER}" />
+                                <Text text="{MainModel>CLAIM_TYPE}" />
+                                <Text text="{MainModel>TREATMENT_FOR}" />
+                                <Text text="{MainModel>SELECT_DEPENDENTS}" />
+                                <Text text="{MainModel>REQUESTED_AMOUNT}" />
+                                <Button
+                                    icon="sap-icon://add"
+                                    press="onCustomerPress"
+                                />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </Page>
+
+            <Page
+                id="detail2"
+                title="Claim Reports"
+                backgroundDesign="Solid"
+                showNavButton="{= !${device>/system/desktop}}"
+                navButtonPress=".onPressDetailBack"
+                class="detailPage"
+            >
+                <Table
+                    id="reporttable"
+                    inset="false"
+                    alternateRowColors="true"
+                    items="{MainModel>/ClaimReports}"
+                >
+                    <columns>
+                        <Column>
+                            <Text text="Claim ID" />
+                        </Column>
+                        <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true"
+                        >
+                            <Text text="Person Number" />
+                        </Column>
+                        <Column
+                            minScreenWidth="Desktop"
+                            demandPopin="true"
+                            width="12em"
+                        >
+                            <Text text="Claim Type" />
+                        </Column>
+                        <Column
+                            minScreenWidth="Desktop"
+                            demandPopin="true"
+                            width="12em"
+                        >
+                            <Text text="Treatment For" />
+                        </Column>
+                        <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true"
+                        >
+                            <Text text="Treatment For (If Others)" />
+                        </Column>
+                        <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true"
+                        >
+                            <Text text="Select Dependents" />
+                        </Column>
+                        <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true"
+                        >
+                            <Text text="Requested Amount" />
+                        </Column>
+                        <Column demandPopin="true">
+                            <Text text="STATUS" />
+                        </Column>
+
+                        <Column demandPopin="true">
+                            <Text text="Approved Amount" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem vAlign="Middle">
+                            <cells>
+                                <Text text="{MainModel>CLAIM_ID}" />
+                                <Text text="{MainModel>PERSON_NUMBER}" />
+                                <Text text="{MainModel>CLAIM_TYPE}" />
+                                <Text text="{MainModel>TREATMENT_FOR}" />
+
+                                <Text
+                                    text="{MainModel>TREATMENT_FOR_IF_OTHERS}"
+                                />
+                                <Text text="{MainModel>SELECT_DEPENDENTS}" />
+                                <Text text="{MainModel>REQUESTED_AMOUNT}" />
+                                <Text text="{MainModel>STATUS}" />
+                                <Text text="{MainModel>APPROVED_AMOUNT}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </Page>
+        </detailPages>
+    </SplitContainer>
+</mvc:View>

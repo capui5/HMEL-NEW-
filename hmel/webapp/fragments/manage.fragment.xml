@@ -1,0 +1,175 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+>
+    <Dialog
+        id="manage"
+        showHeader="true"
+    >
+        <buttons>
+            <Button
+                id="hellosave"
+                text="Save"
+                press=".onSaveFrag"
+                class ="add"
+            />
+            <Button
+                id="hellocancel"
+                text="Cancel"
+                press=".onCloseFrag"
+                 class ="add"
+            />
+        </buttons>
+        <f:Form
+            id="Form"
+            editable="true"
+            class="returnFormClass"
+        >
+            <f:layout>
+                <f:ResponsiveGridLayout
+                    breakpointXL="1000"
+                    labelSpanXL="1"
+                    labelSpanL="1"
+                    labelSpanM="1"
+                    labelSpanS="12"
+                    adjustLabelSpan="false"
+                    emptySpanXL="0"
+                    emptySpanL="0"
+                    emptySpanM="0"
+                    emptySpanS="0"
+                    columnsXL="5"
+                    columnsL="1"
+                    columnsM="1"
+                    singleContainerFullSize="true"
+                />
+            </f:layout>
+            <f:formContainers>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement>
+                            <f:fields>
+                                <VBox class="spacingAfter">
+                                    <Label
+                                        text="Batch No"
+                                        class="label"
+                                    />
+                                    <Input
+                                        id="batchno"
+                                        width="400px"
+                                    />
+                                </VBox>
+                                <VBox class="spacingAfter">
+                                    <Label
+                                        text="Status"
+                                        class="label"
+                                     
+                                    />
+                                    <ComboBox
+                                        id="documentstatus"
+                                        width="400px"
+                                        selectionChange="onStatusChange"
+                                    
+                                    >
+                                        <items>
+                                            <core:Item text="Submitted" />
+                                            <core:Item text="HR Validation" />
+                                            <core:Item
+                                                text="Sent to Insurance Dept"
+                                            />
+                                            <core:Item
+                                                text="Claim sent back to employee"
+                                            />
+                                            <core:Item
+                                                text="Claims Approved by Insurance Dept"
+                                            />
+                                            <core:Item text="Rejected" />
+                                            <core:Item text="Claim Settled" />
+                                        </items>
+                                    </ComboBox>
+                                </VBox>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement>
+                            <f:fields>
+                                <VBox class="spacingAfter">
+                                    <Label
+                                        text="Sent to NIA Date"
+                                        class="label"
+                                   
+                                    />
+                                      <DatePicker
+                                        id="nia"
+                                        width="400px"
+                                        value="{/niaa}"
+                                    />
+                                </VBox>
+                                <VBox class="spacingAfter">
+                                    <Label
+                                        text="Settlement Date"
+                                        class="label"
+                                    />
+                                    <DatePicker
+                                        id="settlementdate"
+                                        width="400px"
+                                        value="{/settlementDate}"
+                                    />
+                                </VBox>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement>
+                            <f:fields>
+                                <VBox class="spacingAfter">
+                                    <Label
+                                        text="Bank Name"
+                                        class="label"
+                                    
+                                    />
+                                    <Input
+                                        id="bankname"
+                                        width="400px"
+                                    />
+                                </VBox>
+                                <VBox class="spacingAfter">
+                                    <Label
+                                        text="Cheque No"
+                                        class="label"
+                                     
+                                    />
+                                    <Input
+                                        id="chequeno"
+                                        width="400px"
+                                    />
+                                </VBox>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement>
+                            <f:fields>
+                                <VBox class="spacingAfter">
+                                    <Label
+                                        text="HL Remarks"
+                                        class="label"
+                                    />
+                                    <Input
+                                        id="hlremarks"
+                                        width="400px"
+                                    />
+                                </VBox>
+                                 <VBox class="spacingAfter">
+                                    <Label
+                                        text="Approved Amount"
+                                        class="label"
+                                    />
+                                    <Input
+                                        id="approved"
+                                        width="400px"
+                                    />
+                                </VBox>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+    </Dialog>
+</core:FragmentDefinition>

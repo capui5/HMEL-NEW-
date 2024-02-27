@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="MyService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="HC_PA0167" EntityType="MyService.HC_PA0167"/>
+                <EntitySet Name="HC_PA0171" EntityType="MyService.HC_PA0171"/>
+                <EntitySet Name="ClaimReports" EntityType="MyService.ClaimReports"/>
+                <EntitySet Name="ManageClaims" EntityType="MyService.ManageClaims"/>
+                <EntitySet Name="ZHRMED_POLICY" EntityType="MyService.ZHRMED_POLICY"/>
+                <EntitySet Name="T77WWW_CLREIM" EntityType="MyService.T77WWW_CLREIM"/>
+                <EntitySet Name="ZHR_MED_CAT" EntityType="MyService.ZHR_MED_CAT"/>
+                <EntitySet Name="T77WWW_CLHLDCOT" EntityType="MyService.T77WWW_CLHLDCOT"/>
+                <EntitySet Name="T77WWW_CLMLDCOT" EntityType="MyService.T77WWW_CLMLDCOT"/>
+                <EntitySet Name="T799L2X" EntityType="MyService.T799L2X"/>
+                <EntitySet Name="CLAIM_DETAILS" EntityType="MyService.CLAIM_DETAILS"/>
+                <EntitySet Name="ZHRMEDICLAIM" EntityType="MyService.ZHRMEDICLAIM"/>
+                <EntitySet Name="POLICY_DETAILS" EntityType="MyService.POLICY_DETAILS"/>
+                <EntitySet Name="CONSULTANCY_CAP_LIMIT" EntityType="MyService.CONSULTANCY_CAP_LIMIT"/>
+                <FunctionImport Name="validations" Function="MyService.validations"/>
+                <FunctionImport Name="policyValidations" Function="MyService.policyValidations"/>
+                <FunctionImport Name="statusUpdate" Function="MyService.statusUpdate"/>
+            </EntityContainer>
+            <EntityType Name="HC_PA0167">
+                <Property Name="MANDT" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="PERNR" Type="Edm.String" MaxLength="8" Nullable="false"/>
+                <Property Name="SUBTY" Type="Edm.String" MaxLength="4" Nullable="false"/>
+                <Property Name="OBJPS" Type="Edm.String" MaxLength="2" Nullable="false"/>
+                <Property Name="SPRPS" Type="Edm.String" MaxLength="1" Nullable="false"/>
+                <Property Name="ENDDA" Type="Edm.String" MaxLength="8" Nullable="false"/>
+                <Property Name="BEGDA" Type="Edm.String" MaxLength="8" Nullable="false"/>
+                <Property Name="SEQNR" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="AEDTM" Type="Edm.String" MaxLength="8"/>
+                <Property Name="UNAME" Type="Edm.String" MaxLength="12"/>
+                <Property Name="HISTO" Type="Edm.String" MaxLength="1"/>
+                <Property Name="ITXEX" Type="Edm.String" MaxLength="1"/>
+                <Property Name="REFEX" Type="Edm.String" MaxLength="1"/>
+                <Property Name="ORDEX" Type="Edm.String" MaxLength="1"/>
+                <Property Name="ITBLD" Type="Edm.String" MaxLength="2"/>
+                <Property Name="PREAS" Type="Edm.String" MaxLength="2"/>
+                <Property Name="FLAG1" Type="Edm.String" MaxLength="1"/>
+                <Property Name="FLAG2" Type="Edm.String" MaxLength="1"/>
+                <Property Name="FLAG3" Type="Edm.String" MaxLength="1"/>
+                <Property Name="FLAG4" Type="Edm.String" MaxLength="1"/>
+                <Property Name="RESE1" Type="Edm.String" MaxLength="2"/>
+                <Property Name="RESE2" Type="Edm.String" MaxLength="2"/>
+                <Property Name="GRPVL" Type="Edm.String" MaxLength="4"/>
+                <Property Name="BAREA" Type="Edm.String" MaxLength="2"/>
+                <Property Name="PLTYP" Type="Edm.String" MaxLength="4"/>
+                <Property Name="BPLAN" Type="Edm.String" MaxLength="4"/>
+                <Property Name="BENGR" Type="Edm.String" MaxLength="4"/>
+                <Property Name="BSTAT" Type="Edm.String" MaxLength="4"/>
+                <Property Name="ELIDT" Type="Edm.String" MaxLength="8"/>
+                <Property Name="ELDTO" Type="Edm.String" MaxLength="8"/>
+                <Property Name="PARDT" Type="Edm.String" MaxLength="8"/>
+                <Property Name="BOPTI" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DEPCV" Type="Edm.String" MaxLength="4"/>
+                <Property Name="COORD" Type="Edm.String" MaxLength="1"/>
+                <Property Name="PROVI" Type="Edm.String" MaxLength="30"/>
+                <Property Name="POLNR" Type="Edm.String" MaxLength="20"/>
+                <Property Name="ENRTY" Type="Edm.String" MaxLength="1"/>
+                <Property Name="EVENT" Type="Edm.String" MaxLength="4"/>
+                <Property Name="EOGRP" Type="Edm.String" MaxLength="8"/>
+                <Property Name="EOIRQ" Type="Edm.String" MaxLength="1"/>
+                <Property Name="EOIPR" Type="Edm.String" MaxLength="1"/>
+                <Property Name="PRETX" Type="Edm.String" MaxLength="1"/>
+                <Property Name="CSTOV" Type="Edm.Decimal" Scale="2" Precision="13"/>
+                <Property Name="BNCST" Type="Edm.Decimal" Scale="2" Precision="13"/>
+                <Property Name="PERIO" Type="Edm.String" MaxLength="2"/>
+                <Property Name="CURRE" Type="Edm.String" MaxLength="5"/>
+                <Property Name="DTY01" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID01" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY02" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID02" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY03" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID03" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY04" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID04" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY05" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID05" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY06" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID06" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY07" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID07" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY08" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID08" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY09" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID09" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY10" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID10" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY11" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID11" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY12" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID12" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY13" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID13" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY14" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID14" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY15" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID15" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY16" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID16" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY17" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID17" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY18" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID18" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY19" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID19" Type="Edm.String" MaxLength="2"/>
+                <Property Name="DTY20" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DID20" Type="Edm.String" MaxLength="2"/>
+                <Property Name="ZCSTOV" Type="Edm.Decimal" Scale="2" Precision="13"/>
+            </EntityType>
+            <EntityType Name="HC_PA0171">
+                <Key>
+                    <PropertyRef Name="MANDT"/>
+                    <PropertyRef Name="PERNR"/>
+                    <PropertyRef Name="SUBTY"/>
+                    <PropertyRef Name="OBJPS"/>
+                    <PropertyRef Name="SPRPS"/>
+                    <PropertyRef Name="ENDDA"/>
+                    <PropertyRef Name="BEGDA"/>
+                    <PropertyRef Name="SEQNR"/>
+                </Key>
+                <Property Name="MANDT" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="PERNR" Type="Edm.String" MaxLength="8" Nullable="false"/>
+                <Property Name="SUBTY" Type="Edm.String" MaxLength="4" Nullable="false"/>
+                <Property Name="OBJPS" Type="Edm.String" MaxLength="2" Nullable="false"/>
+                <Property Name="SPRPS" Type="Edm.String" MaxLength="1" Nullable="false"/>
+                <Property Name="ENDDA" Type="Edm.String" MaxLength="8" Nullable="false"/>
+                <Property Name="BEGDA" Type="Edm.String" MaxLength="8" Nullable="false"/>
+                <Property Name="SEQNR" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="AEDTM" Type="Edm.String" MaxLength="8"/>
+                <Property Name="UNAME" Type="Edm.String" MaxLength="12"/>
+                <Property Name="HISTO" Type="Edm.String" MaxLength="1"/>
+                <Property Name="ITXEX" Type="Edm.String" MaxLength="1"/>
+                <Property Name="REFEX" Type="Edm.String" MaxLength="1"/>
+                <Property Name="ORDEX" Type="Edm.String" MaxLength="1"/>
+                <Property Name="ITBLD" Type="Edm.String" MaxLength="2"/>
+                <Property Name="PREAS" Type="Edm.String" MaxLength="2"/>
+                <Property Name="FLAG1" Type="Edm.String" MaxLength="1"/>
+                <Property Name="FLAG2" Type="Edm.String" MaxLength="1"/>
+                <Property Name="FLAG3" Type="Edm.String" MaxLength="1"/>
+                <Property Name="FLAG4" Type="Edm.String" MaxLength="1"/>
+                <Property Name="RESE1" Type="Edm.String" MaxLength="2"/>
+                <Property Name="RESE2" Type="Edm.String" MaxLength="2"/>
+                <Property Name="GRPVL" Type="Edm.String" MaxLength="4"/>
+                <Property Name="BAREA" Type="Edm.String" MaxLength="2"/>
+                <Property Name="BENGR" Type="Edm.String" MaxLength="4"/>
+                <Property Name="BSTAT" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DOCN1" Type="Edm.String" MaxLength="30"/>
+                <Property Name="DOCI1" Type="Edm.String" MaxLength="20"/>
+                <Property Name="DOCN2" Type="Edm.String" MaxLength="30"/>
+                <Property Name="DOCI2" Type="Edm.String" MaxLength="20"/>
+                <Property Name="SMOKE" Type="Edm.String" MaxLength="1"/>
+                <Property Name="EVINS" Type="Edm.String" MaxLength="1"/>
+                <Property Name="OFFIC" Type="Edm.String" MaxLength="1"/>
+                <Property Name="OWNER" Type="Edm.String" MaxLength="1"/>
+                <Property Name="SEASN" Type="Edm.String" MaxLength="1"/>
+                <Property Name="OTHER" Type="Edm.String" MaxLength="1"/>
+                <Property Name="AFFDT" Type="Edm.String" MaxLength="8"/>
+                <Property Name="HICMP" Type="Edm.String" MaxLength="1"/>
+                <Property Name="DOCN3" Type="Edm.String" MaxLength="30"/>
+                <Property Name="DOCI3" Type="Edm.String" MaxLength="20"/>
+                <Property Name="GENEMP" Type="Edm.String" MaxLength="8"/>
+                <Property Name="GENSPO" Type="Edm.String" MaxLength="8"/>
+            </EntityType>
+            <EntityType Name="ClaimReports">
+                <Property Name="CLAIM_ID" Type="Edm.Int32"/>
+                <Property Name="PERSON_NUMBER" Type="Edm.Int32"/>
+                <Property Name="CLAIM_TYPE" Type="Edm.String" MaxLength="40"/>
+                <Property Name="TREATMENT_FOR" Type="Edm.String" MaxLength="40"/>
+                <Property Name="TREATMENT_FOR_IF_OTHERS" Type="Edm.String" MaxLength="40"/>
+                <Property Name="SELECT_DEPENDENTS" Type="Edm.String" MaxLength="40"/>
+                <Property Name="STATUS" Type="Edm.String"/>
+                <Property Name="REQUESTED_AMOUNT" Type="Edm.Int32"/>
+                <Property Name="APPROVED_AMOUNT" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="ManageClaims">
+                <Property Name="CLAIM_ID" Type="Edm.Int32"/>
+                <Property Name="PERSON_NUMBER" Type="Edm.Int32"/>
+                <Property Name="CLAIM_TYPE" Type="Edm.String" MaxLength="40"/>
+                <Property Name="TREATMENT_FOR" Type="Edm.String" MaxLength="40"/>
+                <Property Name="SELECT_DEPENDENTS" Type="Edm.String" MaxLength="40"/>
+                <Property Name="REQUESTED_AMOUNT" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="ZHRMED_POLICY">
+                <Property Name="MANDT" Type="Edm.String" MaxLength="3"/>
+                <Property Name="STARTDATE" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="ENDDATE" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="AGENCY" Type="Edm.String" MaxLength="40"/>
+                <Property Name="POLICYNO" Type="Edm.String" MaxLength="40"/>
+                <Property Name="ISACTIVE" Type="Edm.Boolean"/>
+            </EntityType>
+            <EntityType Name="T77WWW_CLREIM">
+                <Property Name="MANDT" Type="Edm.String" MaxLength="3"/>
+                <Property Name="MOLGA" Type="Edm.String" MaxLength="2"/>
+                <Property Name="RETYP" Type="Edm.String" MaxLength="4"/>
+                <Property Name="ENDDA" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="BEGDA" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="ALADV" Type="Edm.String" MaxLength="1"/>
+                <Property Name="ALAPL" Type="Edm.String" MaxLength="1"/>
+                <Property Name="ALENC" Type="Edm.String" MaxLength="1"/>
+                <Property Name="ISLTC" Type="Edm.String" MaxLength="1"/>
+                <Property Name="ALADR" Type="Edm.String" MaxLength="1"/>
+                <Property Name="APCAN" Type="Edm.String" MaxLength="1"/>
+                <Property Name="ALCLM" Type="Edm.String" MaxLength="1"/>
+                <Property Name="ADM01" Type="Edm.String" MaxLength="12"/>
+                <Property Name="ADM02" Type="Edm.String" MaxLength="12"/>
+                <Property Name="ADM03" Type="Edm.String" MaxLength="12"/>
+                <Property Name="CUADS" Type="Edm.String" MaxLength="1"/>
+                <Property Name="ALADC" Type="Edm.String" MaxLength="1"/>
+            </EntityType>
+            <EntityType Name="ZHR_MED_CAT">
+                <Property Name="MANDT" Type="Edm.String" MaxLength="3"/>
+                <Property Name="CATAGORY" Type="Edm.Int32"/>
+                <Property Name="BEGDA" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="ENDDA" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="DESCRIPTION" Type="Edm.String" MaxLength="80"/>
+            </EntityType>
+            <EntityType Name="T77WWW_CLHLDCOT">
+                <Property Name="MANDT" Type="Edm.String" MaxLength="3"/>
+                <Property Name="SPRSL" Type="Edm.String" MaxLength="1"/>
+                <Property Name="MOLGA" Type="Edm.String" MaxLength="2"/>
+                <Property Name="RETYP" Type="Edm.String" MaxLength="4"/>
+                <Property Name="RQTYP" Type="Edm.String" MaxLength="2"/>
+                <Property Name="SCMCD" Type="Edm.String" MaxLength="4"/>
+                <Property Name="CSFLD" Type="Edm.String" MaxLength="30"/>
+                <Property Name="SOVAL" Type="Edm.String" MaxLength="40"/>
+                <Property Name="SOTXT" Type="Edm.String" MaxLength="50"/>
+            </EntityType>
+            <EntityType Name="T77WWW_CLMLDCOT">
+                <Property Name="MANDT" Type="Edm.String" MaxLength="3"/>
+                <Property Name="SPRSL" Type="Edm.String" MaxLength="1"/>
+                <Property Name="MOLGA" Type="Edm.String" MaxLength="2"/>
+                <Property Name="RETYP" Type="Edm.String" MaxLength="4"/>
+                <Property Name="RQTYP" Type="Edm.String" MaxLength="2"/>
+                <Property Name="SCMCD" Type="Edm.String" MaxLength="4"/>
+                <Property Name="CSFLD" Type="Edm.String" MaxLength="30"/>
+                <Property Name="SOVAL" Type="Edm.String" MaxLength="40"/>
+                <Property Name="SOTXT" Type="Edm.String" MaxLength="50"/>
+            </EntityType>
+            <EntityType Name="T799L2X">
+                <Property Name="MANDT" Type="Edm.String" MaxLength="3"/>
+                <Property Name="MOLGA" Type="Edm.String" MaxLength="2"/>
+                <Property Name="RETYP" Type="Edm.String" MaxLength="4"/>
+            </EntityType>
+            <EntityType Name="CLAIM_DETAILS">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="CLAIM_ID" Type="Edm.Int32"/>
+                <Property Name="PERSON_NUMBER" Type="Edm.Int32"/>
+                <Property Name="CLAIM_TYPE" Type="Edm.String" MaxLength="40"/>
+                <Property Name="CLAIM_START_DATE" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="CLAIM_END_DATE" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="TREATMENT_FOR" Type="Edm.String" MaxLength="40"/>
+                <Property Name="TREATMENT_FOR_IF_OTHERS" Type="Edm.String" MaxLength="40"/>
+                <Property Name="SELECT_DEPENDENTS" Type="Edm.String" MaxLength="40"/>
+                <Property Name="REQUESTED_AMOUNT" Type="Edm.Int32"/>
+                <Property Name="CONSULTANCY_CATEGORY" Type="Edm.String" MaxLength="40"/>
+                <Property Name="MEDICAL_STORE" Type="Edm.String" MaxLength="40"/>
+                <Property Name="BILL_DATE" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="BILL_NO" Type="Edm.String"/>
+                <Property Name="BILL_AMOUNT" Type="Edm.Int32"/>
+                <Property Name="DISCOUNT" Type="Edm.Int32"/>
+                <Property Name="APPROVED_AMOUNT" Type="Edm.Decimal" Scale="8" Precision="15"/>
+                <Property Name="ATTACHMENTS" Type="Edm.Binary"/>
+            </EntityType>
+            <EntityType Name="ZHRMEDICLAIM">
+                <Key>
+                    <PropertyRef Name="REFNR"/>
+                </Key>
+                <Property Name="REFNR" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="SETTLEMENT_DATE" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="HR_REMARKS" Type="Edm.String" MaxLength="40"/>
+                <Property Name="NIA_DATE" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="CHECK_NO" Type="Edm.String" MaxLength="20"/>
+                <Property Name="BATCH_NO" Type="Edm.String" MaxLength="20"/>
+                <Property Name="BANK_NAME" Type="Edm.String" MaxLength="20"/>
+                <Property Name="STATUS" Type="Edm.String" MaxLength="40"/>
+                <Property Name="APPROVED_AMOUNT" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="POLICY_DETAILS">
+                <Property Name="POLICY_STARTDATE" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="POLICYNO" Type="Edm.String" MaxLength="40"/>
+                <Property Name="PRE_ILLNESS" Type="Edm.Boolean"/>
+                <Property Name="ILLNESS_NAME" Type="Edm.String" MaxLength="40"/>
+            </EntityType>
+            <EntityType Name="CONSULTANCY_CAP_LIMIT">
+                <Key>
+                    <PropertyRef Name="CONSULTANCY_CATEGORY"/>
+                </Key>
+                <Property Name="CONSULTANCY_CATEGORY" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="CAP_AMOUNT" Type="Edm.Int32"/>
+            </EntityType>
+            <Function Name="validations" IsBound="false" IsComposable="false">
+                <Parameter Name="endDate" Type="Edm.Date"/>
+                <Parameter Name="startDate" Type="Edm.Date"/>
+                <Parameter Name="requestedAmount" Type="Edm.Int32"/>
+                <Parameter Name="category" Type="Edm.String"/>
+                <ReturnType Type="Edm.Int32"/>
+            </Function>
+            <Function Name="policyValidations" IsBound="false" IsComposable="false">
+                <Parameter Name="policyNumber" Type="Edm.String"/>
+                <Parameter Name="startDate" Type="Edm.Date"/>
+                <Parameter Name="illnessName" Type="Edm.String"/>
+                <ReturnType Type="Edm.String"/>
+            </Function>
+            <Function Name="statusUpdate" IsBound="false" IsComposable="false">
+                <Parameter Name="REFNR" Type="Edm.Int32"/>
+                <Parameter Name="Status" Type="Edm.String"/>
+                <Parameter Name="Batch" Type="Edm.String"/>
+                <Parameter Name="Nia" Type="Edm.String"/>
+                <Parameter Name="Remark" Type="Edm.String"/>
+                <Parameter Name="Check" Type="Edm.String"/>
+                <Parameter Name="Bank" Type="Edm.String"/>
+                <Parameter Name="Approved" Type="Edm.Int32"/>
+                <Parameter Name="Settlement" Type="Edm.String"/>
+                <ReturnType Type="Edm.Int32"/>
+            </Function>
+            <Annotations Target="MyService.CLAIM_DETAILS/ID">
+                <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

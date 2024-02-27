@@ -1,0 +1,263 @@
+.backgroundVBox {
+    position: relative;
+    margin: 0;
+    /* Reset margin to remove space */
+    padding: 0;
+    /* Reset padding to remove space */
+}
+
+.page1 {
+    background-image: url(../images/bg.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+
+}
+
+.hellotable {
+    background-color: antiquewhite;
+}
+
+.backgroundImage {
+    position: absolute;
+    top: 0;
+    /* Adjust top position based on your desired offset */
+    left: 0;
+    height: 37rem;
+}
+
+.sapUiResponsiveMargin {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* Center the panel horizontally */
+    transform: translateX(-50%) translateY(100%);
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.sapMPanel .sapMTB.sapMPanelHeaderTB {
+    height: 4rem;
+}
+
+.logoImage {
+    margin-right: 5rem;
+}
+
+.Login .sapMBtnInner {
+    background-color: rgb(230, 120, 23);
+
+    height: 30px;
+    width: 100px;
+    border: none;
+
+}
+
+.Login .sapMBtnInner:hover {
+
+    background-color: rgb(101, 147, 39);
+    border: none;
+}
+
+.Login .sapMBtnContent {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.add {
+    margin-left: 1rem;
+}
+
+.add .sapMBtnInner {
+    background-color: rgb(230, 120, 23);
+    height: 30px;
+    width: 100px;
+    border: none;
+
+}
+
+.add .sapMBtnInner:hover {
+
+    background-color: rgb(101, 147, 39);
+    border: none;
+}
+
+.add .sapMBtnContent {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Profile {
+    margin: 10rem;
+    font-weight: bold;
+}
+
+/*sapMText sapUiSelectable sapMTextBreakWord sapMTextMaxWidth Profile sapMBarChild*/
+.sideNavigation {
+    height: 700px;
+}
+
+.sapMInputBaseInner {
+    border: none;
+}
+
+.myCustomTable .sapMListTbl {
+    border-top: 1px solid #000;
+}
+
+.myCustomTable .sapMListHdr {
+    background-color: #333;
+    color: #fff;
+}
+
+.detailPage .sapMBarPH {
+    background-color: #f1e4e4;
+    color: #fff;
+}
+
+.detailPage .sapMBarChild {
+    color: #000;
+    font-size: larger;
+}
+
+.detail2 .sapMBarPH {
+    background-color: #f1e4e4;
+    color: #fff;
+}
+
+.detail2 .sapMBarChild {
+    color: #000;
+    font-size: larger;
+}
+.detail1 .sapMBarPH {
+    background-color: #f1e4e4;
+    color: #fff;
+}
+
+.detail1 .sapMBarChild {
+    color: #000;
+    font-size: larger;
+}
+
+.tabbar .sapContrastPlus {
+    background-color: #fef7e2;
+}
+
+.tabbar .sapMITBTextOnly {
+    color: #000
+}
+
+.sapMITHTextContent {
+    color: #000;
+}
+
+/* .sapMITBContentArrow{
+    color: #fff;
+} */
+.Clear .sapMITBTextOnly {
+    color: #000;
+}
+
+.spacingAfter {
+    margin-bottom: 1.0rem;
+}
+
+.label {
+    font-size: medium;
+    font-weight: 700;
+}
+
+.requestlabel {
+    font-size: large;
+    font-weight: 700;
+    padding-left: 18.5rem;
+}
+
+.request {
+    font-size: large;
+    font-weight: 700;
+    padding-left: 45rem;
+
+}
+
+.requesttext {
+    font-size: large;
+    font-weight: 700;
+
+}
+
+.reviewlabel {
+    font-size: large;
+    font-weight: 700;
+}
+
+.detaillabel {
+    font-size: medium;
+    font-weight: 500;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+
+.detail {
+    font-size: medium;
+    font-weight: light;
+    padding-top: 0.99rem;
+    padding-left: 10px;
+}
+
+.detailreview {
+    font-size: medium;
+    font-weight: 500;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+
+.detailtext {
+    font-size: medium;
+    font-weight: light;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.claimtext {
+    font-size: medium;
+    font-weight: light;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.sapMITBSelected .sapMITBContentArrow::after {
+    background: #000;
+
+}
+
+.watermarkText {
+    position: fixed;
+    right: 10px;
+    /* Adjust the right position as needed */
+    bottom: 30px;
+    /* Adjust the bottom position as needed */
+    font-size: 50px;
+    /* Adjust the font size as needed */
+    opacity: 0.5;
+    /* Adjust the opacity as needed */
+    transform: rotate(-45deg);
+    /* Rotate the text diagonally */
+}
+
+.inputfields {
+    padding-bottom: 1.3rem;
+}
+
+.item {
+    margin: 20px;
+}
+
+/* sapMIBar sapMTBInactive sapMTB sapMTBNewFlex sapMTBClear sapMTB-Auto-CTX sapMOTB */
+/* sapMTitle sapMTitleStyleAuto sapMTitleNoWrap sapUiSelectable sapMTitleMaxWidth sapMBarChild */
+/* sapMITH sapContrastPlus sapMITHBackgroundDesignSolid sapMITBTextOnly sapMITBInLine sapMITBTextOnly sapUiResponsiveContentPadding */

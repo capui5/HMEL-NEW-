@@ -1,0 +1,74 @@
+<mvc:View
+    controllerName="hmel.controller.Login"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:m="sap.m"
+    xmlns="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+>
+    <m:Page class="sapUiContentPadding page1" showHeader="false">
+        <m:content>
+            <m:VBox class="backgroundVBox">
+                <!-- Watermark Container -->
+                <!-- <m:FlexBox
+                    alignItems="Center"
+                    justifyContent="Center"
+                    height="100%"
+                    width="100%"
+                    class="watermarkContainer"
+                >
+                   
+                    <m:Text
+                        text="HMEL"
+                        width="200px"
+                        textAlign="Center"
+                        class="watermarkText"
+                    />
+                </m:FlexBox> -->
+                <m:Panel
+                    width="23rem"
+                    class="sapUiResponsiveMargin"
+                    accessibleRole="Region"
+                >
+                    <m:headerToolbar>
+                        <m:OverflowToolbar>
+                            <!-- Logo Image on top of the Title -->
+                            <m:Image
+                                src="./images/logo.jpg"
+                                height="40px"
+                                width="50px"
+                                class="logoImage"
+                            />
+                            <!-- Title for the Login Form -->
+                            <m:Title text="Login Form" />
+                            <!-- Spacer to push the Logo to the right -->
+                            <m:ToolbarSpacer />
+                        </m:OverflowToolbar>
+                    </m:headerToolbar>
+                    <m:content>
+                        <!-- Your login form controls go here -->
+                        <m:Label text="User Name :" />
+                        <m:Input class="spacingAfter" />
+                        <m:Label text="Password :" />
+                        <m:Input
+                            type="Password"
+                            class="spacingAfter"
+                        />
+                        <m:VBox >
+                            <m:Link
+                                text="Forget Password"
+                                target="_blank"
+                                href=""
+                                class="spacingAfter"
+                            />
+                            <m:Button
+                                text="Login"
+                                press="OnLogin"
+                                class="Login spacingAfter"
+                            />
+                        </m:VBox>
+                    </m:content>
+                </m:Panel>
+            </m:VBox>
+        </m:content>
+    </m:Page>
+</mvc:View>
