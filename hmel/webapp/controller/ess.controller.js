@@ -54,6 +54,14 @@ sap.ui.define([
                 var oDateFormat = DateFormat.getDateTimeInstance({ pattern: "yyyy-MM-dd" });
                 return oDateFormat.format(date);
             },
+            formatClaimId: function(sClaimId) {
+                // Remove commas from the CLAIM_ID
+                return sClaimId.replace(/,/g, '');
+            },
+            formatPersonNumber: function(sPersonNumber) {
+                // Remove commas from the PERSON_NUMBER
+                return sPersonNumber.replace(/,/g, '');
+            },            
             onListItemPress: function (oEvent) {
                 var listItem = oEvent.getParameter("listItem");
 
@@ -926,12 +934,12 @@ sap.ui.define([
                 var oView = this.getView();
                 var oDialog = oView.byId("manage");
                 var sClaimId = this._sClaimId;
-
+            
                 // Check if sClaimId is not null or undefined
                 if (sClaimId) {
                     // Parse sClaimId as an integer
                     var iClaimId = parseInt(sClaimId);
-
+            
                     // Get all input values
                     var sBatchNo = oView.byId("batchno").getValue();
                     var sDocumentStatus = oView.byId("documentstatus").getValue();
@@ -939,17 +947,17 @@ sap.ui.define([
                     var sChequeNo = oView.byId("chequeno").getValue();
                     var sHLRemarks = oView.byId("hlremarks").getValue();
                     var sApprovedAmount = oView.byId("approved").getValue();
-
+            
                     // Get the settlement date value as a timestamp (in milliseconds)
                     var nSettlementTimestamp = Date.now();
                     var sSettlementDateISO = new Date(nSettlementTimestamp).toISOString();
-
+            
                     // Get the NIA date as a timestamp (in milliseconds)
                     var nNia = Date.now();
                     var sNiaISO = new Date(nNia).toISOString();
-
+            
                     var oPayloadZHRMEDICLAIM = {
-                        REFNR: iClaimId, // Use the parsed integer value
+                        REFNR: iClaimId,
                         SETTLEMENT_DATE: sSettlementDateISO,
                         HR_REMARKS: sHLRemarks,
                         NIA_DATE: sNiaISO,
@@ -959,42 +967,28 @@ sap.ui.define([
                         STATUS: sDocumentStatus,
                         APPROVED_AMOUNT: parseInt(sApprovedAmount)
                     };
-
+            
+                    // Check for mandatory fields based on document status
                     if (sDocumentStatus === "Claim Settled") {
-                        var errorMessage = "Please fill in all mandatory fields:\n";
-                        var missingFields = [];
-                        if (!sApprovedAmount) {
-                            missingFields.push("Approved Amount");
-                        }
-                        if (!sBankName) {
-                            missingFields.push("Bank Name");
-                        }
-                        if (!sChequeNo) {
-                            missingFields.push("Cheque No");
-                        }
-                        if (!sSettlementDateISO) {
-                            missingFields.push("Settlement Date");
-                        }
-                        if (missingFields.length > 0) {
-                            errorMessage += "- " + missingFields.join(", ") + "\n";
-                            sap.m.MessageBox.error(errorMessage);
+                        // Check if any mandatory fields are missing
+                        if (!sApprovedAmount || !sBankName || !sChequeNo || !sSettlementDateISO) {
+                            sap.m.MessageBox.error("Please fill in all mandatory fields");
                             return;
                         }
-                    }
-
-                    if (sDocumentStatus === "Rejected") {
-                        var errorMessage = "Please fill in all mandatory fields:\n";
-                        var missingFields = [];
+                    } else if (sDocumentStatus === "Rejected") {
+                        // Check if any mandatory fields are missing
                         if (!sHLRemarks) {
-                            missingFields.push("Remarks");
+                            sap.m.MessageBox.error("Please fill in all mandatory fields");
+                            return;
                         }
-                        if (missingFields.length > 0) {
-                            errorMessage += "- " + missingFields.join(", ") + "\n";
-                            sap.m.MessageBox.error(errorMessage);
+                    } else {
+                        // For other statuses, if Remarks is mandatory
+                        if (!sHLRemarks) {
+                            sap.m.MessageBox.error("Please fill in Remarks");
                             return;
                         }
                     }
-
+            
                     // Check if the REFNR exists using fetch
                     fetch("./odata/v4/my/statusUpdate(REFNR=" + iClaimId + ",Status='" + sDocumentStatus + "',Batch='" + sBatchNo + "',Nia='" + sNiaISO + "',Remark='" + sHLRemarks + "',Check='" + sChequeNo + "',Bank='" + sBankName + "',Approved=" + sApprovedAmount + ",Settlement='" + sSettlementDateISO + "')"
                     )
@@ -1024,9 +1018,9 @@ sap.ui.define([
                                                 oView.byId("settlementdate").setValue("");
                                                 oView.byId("nia").setValue("");
                                                 oView.byId("approved").setValue("");
-
+            
                                                 oDialog.close();
-
+            
                                                 location.reload();
                                                 // Navigate back to detail2
                                                 var oRouter = sap.ui.core.UIComponent.getRouterFor(oView);
@@ -1059,9 +1053,9 @@ sap.ui.define([
                                                 oView.byId("settlementdate").setValue("");
                                                 oView.byId("nia").setValue("");
                                                 oView.byId("approved").setValue("");
-
+            
                                                 oDialog.close();
-
+            
                                                 location.reload();
                                                 // Navigate back to detail2
                                                 var oRouter = sap.ui.core.UIComponent.getRouterFor(oView);
@@ -1084,6 +1078,7 @@ sap.ui.define([
                     sap.m.MessageBox.error("Invalid Claim ID");
                 }
             },
+            
 
 
 
