@@ -44,8 +44,7 @@ sap.ui.define([
                 oComboBox.attachChange(this.onTreatmentChange, this);
 
                 // this.oMockServer = new MockServer();
-                // this.oMockServer.oModel = oModel;
-                
+                // this.oMockServer.oModel = oModel;    
 
             },
             formatDate: function (date) {
@@ -343,7 +342,7 @@ sap.ui.define([
                     .then(data => {
                         if (data.value.success) {
                             if (requestedAmount > data.value.finalAmount) {
-                                var eligibleAmountMessage = "Your eligible amount is: " + data.value.eligibleAmount;
+                                var eligibleAmountMessage = "Your eligible amount is: " + data.value.finalAmount;
                                 MessageBox.information(eligibleAmountMessage, {
                                     onClose: function (oAction) {
                                         if (oAction === MessageBox.Action.OK) {
@@ -408,7 +407,6 @@ sap.ui.define([
                         MessageBox.error("Error occurred while fetching data");
                         console.error('Error:', error);
                     });
-
             },
 
 
@@ -1118,7 +1116,7 @@ sap.ui.define([
                         oChequeNumber.setEnabled(false);
                         oSettledDate.setEnabled(false);
                         oApprovedAmount.setEnabled(false);
-                        oHLRemarks.setEnabled(false);
+                        oHLRemarks.setEnabled(true);
                         break;
                 }
             },

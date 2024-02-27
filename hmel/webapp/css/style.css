@@ -175,19 +175,19 @@
 .requestlabel {
     font-size: large;
     font-weight: 700;
-    padding-left: 18.5rem;
+    padding-left: 6.5rem;
 }
 
 .request {
     font-size: large;
-    font-weight: 700;
-    padding-left: 45rem;
+    font-weight: 600;
+    padding-left: 25rem;
 
 }
 
 .requesttext {
     font-size: large;
-    font-weight: 700;
+    font-weight: 600;
 
 }
 
@@ -257,6 +257,8 @@
 .item {
     margin: 20px;
 }
+
+
 
 /* sapMIBar sapMTBInactive sapMTB sapMTBNewFlex sapMTBClear sapMTB-Auto-CTX sapMOTB */
 /* sapMTitle sapMTitleStyleAuto sapMTitleNoWrap sapUiSelectable sapMTitleMaxWidth sapMBarChild */

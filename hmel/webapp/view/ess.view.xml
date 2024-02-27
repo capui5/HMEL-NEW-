@@ -347,7 +347,6 @@
                                                 columnsXL="5"
                                                 columnsL="1"
                                                 columnsM="1"
-                                                singleContainerFullSize="true"
                                             />
                                         </f:layout>
                                         <f:formContainers>
@@ -367,7 +366,7 @@
                                                                     change="onComboBoxChange"
                                                                     id="consultancycategorys"
                                                                     items="{MainModel>/ZHR_MED_CAT}"
-                                                                    width="330px"
+                                                                    width="100%"
                                                                 >
                                                                     <core:Item
                                                                         key="{MainModel>DESCRIPTION}"
@@ -386,7 +385,7 @@
                                                                 <Input
                                                                     id="DN"
                                                                     liveChange="validateOnlyCharacters"
-                                                                    width="330px"
+                                                                    width="100%"
                                                                 />
                                                             </VBox>
                                                             <VBox
@@ -399,8 +398,7 @@
                                                                 />
                                                                 <Input
                                                                     id="ID"
-                                                                    liveChange="validateOnlyNumbers"
-                                                                    width="330px"
+                                                                    width="100%"
                                                                 />
                                                             </VBox>
                                                         </f:fields>
@@ -422,7 +420,7 @@
                                                         filters: [{ path: 'CSFLD', operator: 'EQ', value1: 'C40T3' }]
     }"
                                                                     id="HospitalStore"
-                                                                    width="330px"
+                                                                    width="100%"
                                                                 >
                                                                     <core:Item
                                                                         key="{MainModel>SOVAL}"
@@ -444,7 +442,7 @@
                                                         filters: [{ path: 'CSFLD', operator: 'EQ', value1: 'C40T4' },{ path: 'RETYP', operator: 'EQ', value1: 'ZMIN' }]
     }"
                                                                     id="Hospitallocation"
-                                                                    width="330px"
+                                                                    width="100%"
                                                                     change="onHospitalLocationChange"
                                                                 >
                                                                     <core:Item
@@ -463,7 +461,7 @@
                                                                 <Input
                                                                     id="HL"
                                                                     liveChange="validateOnlyCharacters"
-                                                                    width="330px"
+                                                                    width="100%"
                                                                 />
                                                             </VBox>
                                                         </f:fields>
@@ -480,7 +478,7 @@
                                                                 />
                                                                 <DatePicker
                                                                     id="billdate"
-                                                                    width="330px"
+                                                                    width="100%"
                                                                     change="onBillDateChange"
                                                                     valueFormat="yyyy-MM-dd"
                                                                 />
@@ -495,7 +493,7 @@
                                                                 />
                                                                 <Input
                                                                     id="billno"
-                                                                    width="330px"
+                                                                    width="100%"
                                                                 />
                                                             </VBox>
                                                             <VBox
@@ -509,7 +507,7 @@
                                                                 <Input
                                                                     id="billamount"
                                                                     liveChange="handleBillAmountChange"
-                                                                    width="330px"
+                                                                    width="100%"
                                                                 />
                                                             </VBox>
                                                         </f:fields>
@@ -527,7 +525,7 @@
                                                                 <Input
                                                                     id="discount"
                                                                     liveChange="handleDiscountChange"
-                                                                    width="330px"
+                                                                    width="100%"
                                                                 />
                                                             </VBox>
                                                             <VBox
@@ -539,7 +537,7 @@
                                                                 />
                                                                 <Input
                                                                     id="requestamount"
-                                                                    width="330px"
+                                                                    width="100%"
                                                                     editable="false"
                                                                 />
                                                             </VBox>
@@ -552,7 +550,7 @@
                                                                 />
                                                                 <Input
                                                                     id="description"
-                                                                    width="330px"
+                                                                    width="100%"
                                                                 />
                                                             </VBox>
                                                         </f:fields>
@@ -574,7 +572,7 @@
                                         </f:formContainers>
                                     </f:Form>
 
-                                    <HBox>
+                                    <HBox class="buttonsAndTotal">
                                         <!-- Left-aligned buttons -->
                                         <VBox>
                                             <HBox>
@@ -624,7 +622,10 @@
                                             </HBox>
                                         </VBox>
 
-                                        <VBox justifyContent="End">
+                                        <VBox
+                                            justifyContent="End"
+                                            width="100%"
+                                        >
                                             <Label
                                                 id="totalRequestedAmountLabel"
                                                 text="Total Requested Amount:"
@@ -1250,26 +1251,33 @@
                     items="{MainModel>/ManageClaims}"
                 >
                     <columns>
-                        <Column>
+                        <Column   minScreenWidth="Tablet"
+                            demandPopin="true"
+                            width="10em"
+                            popinDisplay="Inline">
                             <Text text="Claim ID" />
                         </Column>
                         <Column
                             minScreenWidth="Tablet"
                             demandPopin="true"
+                            width="10em"
+                            popinDisplay="Inline"
                         >
                             <Text text="Person Number" />
                         </Column>
                         <Column
                             minScreenWidth="Desktop"
                             demandPopin="true"
-                            width="12em"
+                            width="10em"
+                            popinDisplay="Inline"
                         >
                             <Text text="Claim Type" />
                         </Column>
                         <Column
                             minScreenWidth="Desktop"
                             demandPopin="true"
-                            width="12em"
+                            width="10em"
+                            popinDisplay="Inline"
                         >
                             <Text text="Treatment For" />
                         </Column>
@@ -1277,18 +1285,23 @@
                         <Column
                             minScreenWidth="Tablet"
                             demandPopin="true"
+                            popinDisplay="Inline"
+                             width="10em"
                         >
                             <Text text="Select Dependents" />
                         </Column>
                         <Column
                             minScreenWidth="Tablet"
                             demandPopin="true"
+                            popinDisplay="Inline"
+                             width="10em"
                         >
                             <Text text="Requested Amount" />
                         </Column>
                         <Column
                             hAlign="Center"
                             demandPopin="true"
+                            popinDisplay="Inline"
                         />
                     </columns>
                     <items>
@@ -1325,7 +1338,9 @@
                     items="{MainModel>/ClaimReports}"
                 >
                     <columns>
-                        <Column>
+                        <Column   minScreenWidth="Desktop"
+                            demandPopin="true"
+                            width="8em">
                             <Text text="Claim ID" />
                         </Column>
                         <Column
@@ -1337,40 +1352,45 @@
                         <Column
                             minScreenWidth="Desktop"
                             demandPopin="true"
-                            width="12em"
                         >
                             <Text text="Claim Type" />
                         </Column>
                         <Column
                             minScreenWidth="Desktop"
                             demandPopin="true"
-                            width="12em"
+                            
                         >
                             <Text text="Treatment For" />
                         </Column>
                         <Column
                             minScreenWidth="Tablet"
                             demandPopin="true"
+                            
                         >
                             <Text text="Treatment For (If Others)" />
                         </Column>
                         <Column
                             minScreenWidth="Tablet"
                             demandPopin="true"
+                           
                         >
                             <Text text="Select Dependents" />
                         </Column>
                         <Column
                             minScreenWidth="Tablet"
                             demandPopin="true"
+                             
                         >
                             <Text text="Requested Amount" />
                         </Column>
-                        <Column demandPopin="true">
+                        <Column 
+                            demandPopin="true"
+                            >
                             <Text text="STATUS" />
                         </Column>
 
-                        <Column demandPopin="true">
+                        <Column  demandPopin="true"
+                            >
                             <Text text="Approved Amount" />
                         </Column>
                     </columns>
@@ -1378,13 +1398,11 @@
                         <ColumnListItem vAlign="Middle">
                             <cells>
                                 <Text text="{MainModel>CLAIM_ID}" />
+                               
                                 <Text text="{MainModel>PERSON_NUMBER}" />
                                 <Text text="{MainModel>CLAIM_TYPE}" />
                                 <Text text="{MainModel>TREATMENT_FOR}" />
-
-                                <Text
-                                    text="{MainModel>TREATMENT_FOR_IF_OTHERS}"
-                                />
+                                <Text text="{MainModel>TREATMENT_FOR_IF_OTHERS}" />
                                 <Text text="{MainModel>SELECT_DEPENDENTS}" />
                                 <Text text="{MainModel>REQUESTED_AMOUNT}" />
                                 <Text text="{MainModel>STATUS}" />
