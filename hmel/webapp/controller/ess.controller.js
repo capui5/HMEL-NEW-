@@ -901,7 +901,6 @@ sap.ui.define([
 
                 console.log("Claim ID:", sClaimId);
 
-
                 if (!oDialog) {
                     // Load the fragment if not already loaded
                     oDialog = sap.ui.xmlfragment(oView.getId(), "hmel.fragments.manage", this);
@@ -913,6 +912,9 @@ sap.ui.define([
 
                 oDialog.open();
             },
+        
+            
+                        
             onCloseFrag: function () {
                 var oView = this.getView();
                 var oDialog = oView.byId("manage");
@@ -955,6 +957,17 @@ sap.ui.define([
                     // Get the NIA date as a timestamp (in milliseconds)
                     var nNia = Date.now();
                     var sNiaISO = new Date(nNia).toISOString();
+
+                     // Default Approved amount to 0 if not provided
+                     if (!sApprovedAmount) {
+                        sApprovedAmount = 0;
+                    } else {
+                        // Ensure Approved amount is a valid integer
+                        if (isNaN(parseInt(sApprovedAmount))) {
+                            throw new Error("Invalid Approved amount");
+                        }
+                        sApprovedAmount = parseInt(sApprovedAmount); 
+                    }
             
                     var oPayloadZHRMEDICLAIM = {
                         REFNR: iClaimId,
@@ -965,7 +978,7 @@ sap.ui.define([
                         BATCH_NO: sBatchNo,
                         BANK_NAME: sBankName,
                         STATUS: sDocumentStatus,
-                        APPROVED_AMOUNT: parseInt(sApprovedAmount)
+                        APPROVED_AMOUNT:sApprovedAmount
                     };
             
                     // Check for mandatory fields based on document status
@@ -999,7 +1012,7 @@ sap.ui.define([
                             if (data.success) {
                                 // If REFNR exists, update the status
                                 fetch("./odata/v4/my/statusUpdate(REFNR=" + iClaimId + ",Status='" + sDocumentStatus + "',Batch='" + sBatchNo + "',Nia='" + sNiaISO + "',Remark='" + sHLRemarks + "',Check='" + sChequeNo + "',Bank='" + sBankName + "',Approved=" + sApprovedAmount + ",Settlement='" + sSettlementDateISO + "')", {
-                                    method: "PUT",
+                                    method: "PATCH",
                                     headers: {
                                         "Content-Type": "application/json"
                                     },
@@ -1079,8 +1092,7 @@ sap.ui.define([
                 }
             },
             
-
-
+            
 
             onStatusChange: function (oEvent) {
                 var sDocumentStatus = oEvent.getSource().getSelectedItem().getText();
@@ -1109,7 +1121,7 @@ sap.ui.define([
                         // Other statuses
                         oBankDetails.setEnabled(false);
                         oChequeNumber.setEnabled(false);
-                        oSettledDate.setEnabled(false);
+                        oSettledDate.setEnabled(true);
                         oApprovedAmount.setEnabled(false);
                         oHLRemarks.setEnabled(true);
                         break;

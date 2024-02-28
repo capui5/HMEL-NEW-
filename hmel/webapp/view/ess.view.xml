@@ -1249,6 +1249,7 @@
                     inset="false"
                     alternateRowColors="true"
                     items="{MainModel>/ManageClaims}"
+                     sticky="ColumnHeaders"
                 >
                     <columns>
                         <Column   minScreenWidth="Tablet"
@@ -1307,8 +1308,10 @@
                     <items>
                         <ColumnListItem vAlign="Middle">
                             <cells>
-                                <Text text="{MainModel>CLAIM_ID}" />
-                                <Text text="{MainModel>PERSON_NUMBER}" />
+                                <!-- <Text text="{MainModel>CLAIM_ID}" /> -->
+                                <Text text="{path: 'MainModel>CLAIM_ID', formatter: '.formatClaimId'}" />
+                                <!-- <Text text="{MainModel>PERSON_NUMBER}" /> -->
+                                <Text text="{path: 'MainModel>PERSON_NUMBER', formatter: '.formatPersonNumber'}" />
                                 <Text text="{MainModel>CLAIM_TYPE}" />
                                 <Text text="{MainModel>TREATMENT_FOR}" />
                                 <Text text="{MainModel>SELECT_DEPENDENTS}" />
@@ -1336,6 +1339,7 @@
                     inset="false"
                     alternateRowColors="true"
                     items="{MainModel>/ClaimReports}"
+                     sticky="ColumnHeaders"
                 >
                     <columns>
                         <Column   minScreenWidth="Desktop"
@@ -1397,9 +1401,9 @@
                     <items>
                         <ColumnListItem vAlign="Middle">
                             <cells>
-                                <Text text="{MainModel>CLAIM_ID}" />
-                               
-                                <Text text="{MainModel>PERSON_NUMBER}" />
+                                <Text text="{path: 'MainModel>CLAIM_ID', formatter: '.formatClaimId'}" />
+                                <!-- <Text text="{MainModel>PERSON_NUMBER}" /> -->
+                                <Text text="{path: 'MainModel>PERSON_NUMBER', formatter: '.formatPersonNumber'}" />
                                 <Text text="{MainModel>CLAIM_TYPE}" />
                                 <Text text="{MainModel>TREATMENT_FOR}" />
                                 <Text text="{MainModel>TREATMENT_FOR_IF_OTHERS}" />
