@@ -1264,7 +1264,7 @@
                         <Column
                             minScreenWidth="Tablet"
                             demandPopin="true"
-                            width="10em"
+                            width="8em"
                             popinDisplay="Inline"
                         >
                             <Text text="Claim ID" />
@@ -1272,7 +1272,7 @@
                         <Column
                             minScreenWidth="Tablet"
                             demandPopin="true"
-                            width="10em"
+                            width="8em"
                             popinDisplay="Inline"
                         >
                             <Text text="Person Number" />
@@ -1280,10 +1280,9 @@
                         <Column
                             minScreenWidth="Tablet"
                             demandPopin="true"
-                            width="10em"
-                            popinDisplay="Inline"
+                            width="8em"
                         >
-                            <Text text="Status" />
+                            <Text text="Submitted Date " />
                         </Column>
                         <Column
                             minScreenWidth="Desktop"
@@ -1296,7 +1295,7 @@
                         <Column
                             minScreenWidth="Desktop"
                             demandPopin="true"
-                            width="10em"
+                            width="6em"
                             popinDisplay="Inline"
                         >
                             <Text text="Treatment For" />
@@ -1306,7 +1305,7 @@
                             minScreenWidth="Tablet"
                             demandPopin="true"
                             popinDisplay="Inline"
-                            width="10em"
+                            width="8em"
                         >
                             <Text text="Select Dependents" />
                         </Column>
@@ -1314,14 +1313,23 @@
                             minScreenWidth="Tablet"
                             demandPopin="true"
                             popinDisplay="Inline"
-                            width="10em"
+                            width="8em"
                         >
                             <Text text="Requested Amount" />
                         </Column>
+                         <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true"
+                            width="8em"
+                            popinDisplay="Inline"
+                        >
+                            <Text text="Status" />
+                        </Column>
+                         
                         <Column
                             hAlign="Center"
                             demandPopin="true"
-                            popinDisplay="Inline"
+                            width="3em"
                         />
                     </columns>
                     <items>
@@ -1335,11 +1343,15 @@
                                 <Text
                                     text="{path: 'MainModel>PERSON_NUMBER', formatter: '.formatPersonNumber'}"
                                 />
-                                <Text text="{MainModel>STATUS}" />
+                              
+                              <!-- <Text text="{MainModel>SUBMITTED_DATE}" /> -->
+                              <Text text="{path: 'MainModel>SUBMITTED_DATE', formatter: '.SubmitDate'}" />
+
                                 <Text text="{MainModel>CLAIM_TYPE}" />
                                 <Text text="{MainModel>TREATMENT_FOR}" />
                                 <Text text="{MainModel>SELECT_DEPENDENTS}" />
                                 <Text text="{MainModel>REQUESTED_AMOUNT}" />
+                                    <Text text="{MainModel>CURRENT_STATUS}" />
                                 <Button
                                     icon="sap-icon://add"
                                     press="onCustomerPress"

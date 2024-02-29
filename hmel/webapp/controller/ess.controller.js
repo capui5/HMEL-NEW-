@@ -54,6 +54,23 @@ sap.ui.define([
                 var oDateFormat = DateFormat.getDateTimeInstance({ pattern: "yyyy-MM-dd" });
                 return oDateFormat.format(date);
             },
+            SubmitDate: function(dateString) {
+                if (!dateString) {
+                    return "";
+                }
+            
+                // Create a Date object from the string
+                var date = new Date(dateString);
+            
+                // Check if the date is valid
+                if (isNaN(date.getTime())) {
+                    return "";
+                }
+            
+                // Format the date
+                var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "MMM dd, yyyy" });
+                return oDateFormat.format(date);
+            },            
             formatClaimId: function(sClaimId) {
                 // Remove commas from the CLAIM_ID
                 return sClaimId.replace(/,/g, '');
