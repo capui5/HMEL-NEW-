@@ -44,8 +44,8 @@ sap.ui.define([
                 oComboBox.attachChange(this.onTreatmentChange, this);
 
                 // this.oMockServer = new MockServer();
-                // this.oMockServer.oModel = oModel;   
-    
+                // this.oMockServer.oModel = oModel;    
+
             },
             formatDate: function (date) {
                 if (!date) {
@@ -54,19 +54,10 @@ sap.ui.define([
                 var oDateFormat = DateFormat.getDateTimeInstance({ pattern: "yyyy-MM-dd" });
                 return oDateFormat.format(date);
             },
-            // formatClaimId: function(sClaimId) {
-            //     // Remove commas from the CLAIM_ID
-            //     return sClaimId.replace(/,/g, '');
-
-            // },
-            formatClaimId: function(sClaimId, bAscending) {
+            formatClaimId: function(sClaimId) {
                 // Remove commas from the CLAIM_ID
-                sClaimId = sClaimId.replace(/,/g, '');
-            
-                // If bAscending is true, convert sClaimId to a number and return, else return as it is
-                return bAscending ? Number(sClaimId) : sClaimId;
+                return sClaimId.replace(/,/g, '');
             },
-                        
             formatPersonNumber: function(sPersonNumber) {
                 // Remove commas from the PERSON_NUMBER
                 return sPersonNumber.replace(/,/g, '');
@@ -513,45 +504,25 @@ sap.ui.define([
                 MessageBox.success("Item cloned successfully.");
                 // Clear the selection in the list
                 this.byId("detailsList").removeSelections();
+
+
             },
 
-            // clonePress: function () {
-            //     var list = this.byId("detailsList");
-            //     var selectedItems = list.getSelectedItems();
-            
-            //     // Check if any items are selected
-            //     if (selectedItems.length !== 1) {
-            //         MessageBox.error("Please select exactly one item to clone.");
-            //         return;
-            //     }
-            
-            //     // Get the context of the selected item
-            //     var selectedContext = selectedItems[0].getBindingContext("claimModel");
-            
-            //     // Get the data of the selected item from the model
-            //     var selectedData = selectedContext.getProperty();
-            
-            //     // Clone the data (create a shallow copy)
-            //     var clonedData = Object.assign({}, selectedData);
-            
-            //     // Format the Bill Date
-            //     if (clonedData.billDate instanceof Date) {
-            //         var year = clonedData.billDate.getFullYear();
-            //         var month = ("0" + (clonedData.billDate.getMonth() + 1)).slice(-2);
-            //         var day = ("0" + clonedData.billDate.getDate()).slice(-2);
-            //         clonedData.billDate = year + "-" + month + "-" + day;
-            //     }
-            
-            //     // Set the form values directly with the cloned data
-            //     this.setFormValues(clonedData);
-            
-            //     MessageBox.success("Item cloned successfully.");
-            //     // Clear the selection in the list
-            //     this.byId("detailsList").removeSelections();
-            // },
-            
-           
-
+            setFormValues: function (details) {
+                // Set form values directly
+                this.byId("consultancycategorys").setSelectedKey(details.category);
+                this.byId("DN").setValue(details.doctor);
+                this.byId("ID").setValue(details.patientId);
+                this.byId("HospitalStore").setSelectedKey(details.hospitalStore);
+                this.byId("Hospitallocation").setSelectedKey(details.hospitalLocation);
+                this.byId("HL").setValue(details.hospitalLocationOther);
+                this.byId("billdate").setValue(new Date(details.billDate));
+                this.byId("billno").setValue(details.billNo);
+                this.byId("billamount").setValue(details.billAmount);
+                this.byId("discount").setValue(details.discount);
+                this.byId("requestamount").setValue(details.requestedAmount);
+                this.byId("description").setValue(details.review);
+            },
             EditPress: function () {
                 var list = this.byId("detailsList");
                 var selectedItems = list.getSelectedItems();
