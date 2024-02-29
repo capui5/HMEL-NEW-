@@ -891,34 +891,98 @@ sap.ui.define([
             },
 
 
-            onOpenDialog: function (sClaimId) {
+            // onOpenDialog: function (sClaimId) {
 
+            //     var oView = this.getView();
+            //     var oDialog = oView.byId("manage");
+
+            //     // Retrieve sClaimId from the controller's property
+            //     var sClaimId = this._sClaimId;
+
+            //     console.log("Claim ID:", sClaimId);
+
+            //     if (!oDialog) {
+            //         // Load the fragment if not already loaded
+            //         oDialog = sap.ui.xmlfragment(oView.getId(), "hmel.fragments.manage", this);
+            //         oView.addDependent(oDialog);
+            //     }
+
+            //     // Set the title with claim ID
+            //     oDialog.setTitle("Claim ID: " + sClaimId);
+
+            //     oDialog.open();
+            // },
+
+            onOpenDialog: function(sClaimId) {
                 var oView = this.getView();
                 var oDialog = oView.byId("manage");
-
-                // Retrieve sClaimId from the controller's property
-                var sClaimId = this._sClaimId;
-
-                console.log("Claim ID:", sClaimId);
-
-                if (!oDialog) {
-                    // Load the fragment if not already loaded
-                    oDialog = sap.ui.xmlfragment(oView.getId(), "hmel.fragments.manage", this);
-                    oView.addDependent(oDialog);
-                }
-
-                // Set the title with claim ID
-                oDialog.setTitle("Claim ID: " + sClaimId);
-
-                oDialog.open();
+            
+                var that = this; // Store 'this' reference
+            
+                var sUrl = "/odata/v4/my/ZHRMEDICLAIM?$filter=REFNR eq " + sClaimId;
+            
+                $.ajax({
+                    url: sUrl,
+                    type: "GET",
+                    success: function(response) {
+                        console.log("Data:", response);
+                        if (response && response.value && response.value.length > 0) {
+                            var data = response.value[0];
+            
+                            if (!oDialog) {
+                                oDialog = sap.ui.xmlfragment(oView.getId(), "hmel.fragments.manage", that);
+                                oView.addDependent(oDialog);
+                            }
+            
+                            // Set values to UI elements
+                            oDialog.setTitle("Claim ID: " + sClaimId);
+                            oDialog.open();
+                            oView.byId("batchno").setValue(data.BATCH_NO);
+                            oView.byId("documentstatus").setValue(data.STATUS);
+                            oView.byId("nia").setValue(data.NIA_DATE);
+                            oView.byId("settlementdate").setValue(data.SETTLEMENT_DATE);
+                            oView.byId("bankname").setValue(data.BANK_NAME);
+                            oView.byId("chequeno").setValue(data.CHECK_NO);
+                            oView.byId("hlremarks").setValue(data.HR_REMARKS);
+                            oView.byId("approved").setValue(data.APPROVED_AMOUNT);
+                        } else {
+                            if (!oDialog) {
+                                oDialog = sap.ui.xmlfragment(oView.getId(), "hmel.fragments.manage", that);
+                                oView.addDependent(oDialog);
+                            }
+                            oDialog.setTitle("Claim ID: " + sClaimId);
+                            oDialog.open();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                        console.error("Error:", error);
+                        sap.m.MessageBox.error("Error retrieving data for Claim ID: " + sClaimId);
+                    }
+                });
             },
-        
             
                         
-            onCloseFrag: function () {
+            // onCloseFrag: function () {
+            //     var oView = this.getView();
+            //     var oDialog = oView.byId("manage");
+
+            //     // Clearing input fields
+            //     oView.byId("batchno").setValue("");
+            //     oView.byId("documentstatus").setSelectedKey("");
+            //     oView.byId("nia").setValue("");
+            //     oView.byId("settlementdate").setValue("");
+            //     oView.byId("bankname").setValue("");
+            //     oView.byId("chequeno").setValue("");
+            //     oView.byId("hlremarks").setValue("");
+
+            //     oDialog.close();
+            // },
+
+            onCloseFrag: function() {
                 var oView = this.getView();
                 var oDialog = oView.byId("manage");
-
+            
                 // Clearing input fields
                 oView.byId("batchno").setValue("");
                 oView.byId("documentstatus").setSelectedKey("");
@@ -927,11 +991,15 @@ sap.ui.define([
                 oView.byId("bankname").setValue("");
                 oView.byId("chequeno").setValue("");
                 oView.byId("hlremarks").setValue("");
-
-                oDialog.close();
+                oView.byId("approved").setValue("");
+            
+                if (oDialog) {
+                    oDialog.close();
+                }
             },
 
-
+           
+          
             onSaveFrag: function () {
                 var oView = this.getView();
                 var oDialog = oView.byId("manage");
@@ -1082,18 +1150,14 @@ sap.ui.define([
                             }
                         })
                         .catch(function (error) {
-                            console.error('Error occurred while checking REFNR:', error);
                             sap.m.MessageBox.error("Failed to check REFNR");
                         });
                 } else {
                     // Handle the case where sClaimId is null or undefined
-                    console.error('sClaimId is null or undefined');
                     sap.m.MessageBox.error("Invalid Claim ID");
                 }
             },
             
-            
-
             onStatusChange: function (oEvent) {
                 var sDocumentStatus = oEvent.getSource().getSelectedItem().getText();
                 var oBankDetails = this.getView().byId("bankname");
