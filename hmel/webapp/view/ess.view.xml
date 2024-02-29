@@ -1249,13 +1249,24 @@
                     inset="false"
                     alternateRowColors="true"
                     items="{MainModel>/ManageClaims}"
-                     sticky="ColumnHeaders"
+                    sticky="ColumnHeaders"
                 >
+                    <headerToolbar>
+                        <Toolbar>
+                            <SearchField
+                                width="auto"
+                                search="onSearch"
+                                placeholder="Search"
+                            />
+                        </Toolbar>
+                    </headerToolbar>
                     <columns>
-                        <Column   minScreenWidth="Tablet"
+                        <Column
+                            minScreenWidth="Tablet"
                             demandPopin="true"
                             width="10em"
-                            popinDisplay="Inline">
+                            popinDisplay="Inline"
+                        >
                             <Text text="Claim ID" />
                         </Column>
                         <Column
@@ -1265,6 +1276,14 @@
                             popinDisplay="Inline"
                         >
                             <Text text="Person Number" />
+                        </Column>
+                        <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true"
+                            width="10em"
+                            popinDisplay="Inline"
+                        >
+                            <Text text="Status" />
                         </Column>
                         <Column
                             minScreenWidth="Desktop"
@@ -1287,7 +1306,7 @@
                             minScreenWidth="Tablet"
                             demandPopin="true"
                             popinDisplay="Inline"
-                             width="10em"
+                            width="10em"
                         >
                             <Text text="Select Dependents" />
                         </Column>
@@ -1295,7 +1314,7 @@
                             minScreenWidth="Tablet"
                             demandPopin="true"
                             popinDisplay="Inline"
-                             width="10em"
+                            width="10em"
                         >
                             <Text text="Requested Amount" />
                         </Column>
@@ -1309,9 +1328,14 @@
                         <ColumnListItem vAlign="Middle">
                             <cells>
                                 <!-- <Text text="{MainModel>CLAIM_ID}" /> -->
-                                <Text text="{path: 'MainModel>CLAIM_ID', formatter: '.formatClaimId'}" />
+                                <Text
+                                    text="{path: 'MainModel>CLAIM_ID', formatter: '.formatClaimId'}"
+                                />
                                 <!-- <Text text="{MainModel>PERSON_NUMBER}" /> -->
-                                <Text text="{path: 'MainModel>PERSON_NUMBER', formatter: '.formatPersonNumber'}" />
+                                <Text
+                                    text="{path: 'MainModel>PERSON_NUMBER', formatter: '.formatPersonNumber'}"
+                                />
+                                <Text text="{MainModel>STATUS}" />
                                 <Text text="{MainModel>CLAIM_TYPE}" />
                                 <Text text="{MainModel>TREATMENT_FOR}" />
                                 <Text text="{MainModel>SELECT_DEPENDENTS}" />
@@ -1339,12 +1363,21 @@
                     inset="false"
                     alternateRowColors="true"
                     items="{MainModel>/ClaimReports}"
-                     sticky="ColumnHeaders"
+                    sticky="ColumnHeaders"
                 >
+                    <Toolbar>
+                        <SearchField
+                            width="auto"
+                            search="onSearch"
+                            placeholder="Search"
+                        />
+                    </Toolbar>
                     <columns>
-                        <Column   minScreenWidth="Desktop"
+                        <Column
+                            minScreenWidth="Desktop"
                             demandPopin="true"
-                            width="8em">
+                            width="8em"
+                        >
                             <Text text="Claim ID" />
                         </Column>
                         <Column
@@ -1362,51 +1395,41 @@
                         <Column
                             minScreenWidth="Desktop"
                             demandPopin="true"
-                            
                         >
                             <Text text="Treatment For" />
                         </Column>
                         <Column
                             minScreenWidth="Tablet"
                             demandPopin="true"
-                            
-                        >
-                            <Text text="Treatment For (If Others)" />
-                        </Column>
-                        <Column
-                            minScreenWidth="Tablet"
-                            demandPopin="true"
-                           
                         >
                             <Text text="Select Dependents" />
                         </Column>
                         <Column
                             minScreenWidth="Tablet"
                             demandPopin="true"
-                             
                         >
                             <Text text="Requested Amount" />
                         </Column>
-                        <Column 
-                            demandPopin="true"
-                            >
+                        <Column demandPopin="true">
                             <Text text="STATUS" />
                         </Column>
 
-                        <Column  demandPopin="true"
-                            >
+                        <Column demandPopin="true">
                             <Text text="Approved Amount" />
                         </Column>
                     </columns>
                     <items>
                         <ColumnListItem vAlign="Middle">
                             <cells>
-                                <Text text="{path: 'MainModel>CLAIM_ID', formatter: '.formatClaimId'}" />
+                                <Text
+                                    text="{path: 'MainModel>CLAIM_ID', formatter: '.formatClaimId'}"
+                                />
                                 <!-- <Text text="{MainModel>PERSON_NUMBER}" /> -->
-                                <Text text="{path: 'MainModel>PERSON_NUMBER', formatter: '.formatPersonNumber'}" />
+                                <Text
+                                    text="{path: 'MainModel>PERSON_NUMBER', formatter: '.formatPersonNumber'}"
+                                />
                                 <Text text="{MainModel>CLAIM_TYPE}" />
                                 <Text text="{MainModel>TREATMENT_FOR}" />
-                                <Text text="{MainModel>TREATMENT_FOR_IF_OTHERS}" />
                                 <Text text="{MainModel>SELECT_DEPENDENTS}" />
                                 <Text text="{MainModel>REQUESTED_AMOUNT}" />
                                 <Text text="{MainModel>STATUS}" />
