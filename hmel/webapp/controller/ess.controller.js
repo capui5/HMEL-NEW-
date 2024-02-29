@@ -966,9 +966,10 @@ sap.ui.define([
                 var oView = this.getView();
                 var oDialog = oView.byId("manage");
                 var that = this; // Store 'this' reference
-                var sUrl = "/odata/v4/my/ZHRMEDICLAIM?$filter=REFNR eq " + sClaimId;
+                var sUrl = "./odata/v4/my/ZHRMEDICLAIM?$filter=REFNR eq " + sClaimId;
             
-               
+                // Get owner component
+                var oOwnerComponent = sap.ui.core.Component.getOwnerComponentFor(this);
             
                 fetch(sUrl)
                     .then(function(response) {
@@ -992,14 +993,14 @@ sap.ui.define([
                             oDialog.open();
                             oView.byId("batchno").setValue(claimData.BATCH_NO);
                             oView.byId("documentstatus").setValue(claimData.STATUS);
+                            // oView.byId("nia").setValue(claimData.NIA_DATE);
+                            // oView.byId("settlementdate").setValue(claimData.SETTLEMENT_DATE);
                             var niaDate = new Date(claimData.NIA_DATE);
-var settlementDate = new Date(claimData.SETTLEMENT_DATE);
-
-// Format dates to "YYYY-MM-DD" format
-var formattedNiaDate = niaDate.toISOString().split('T')[0];
-var formattedSettlementDate = settlementDate.toISOString().split('T')[0];
-oView.byId("nia").setValue(formattedNiaDate);
-oView.byId("settlementdate").setValue(formattedSettlementDate);
+                            var formattedNiaDate = niaDate.toISOString().split('T')[0];
+                            oView.byId("nia").setValue(formattedNiaDate);
+                            var settlementDate = new Date(claimData.SETTLEMENT_DATE);
+                            var formattedSettlementDate = settlementDate.toISOString().split('T')[0];
+                            oView.byId("settlementdate").setValue(formattedSettlementDate);
                             oView.byId("bankname").setValue(claimData.BANK_NAME);
                             oView.byId("chequeno").setValue(claimData.CHECK_NO);
                             oView.byId("hlremarks").setValue(claimData.HR_REMARKS);
