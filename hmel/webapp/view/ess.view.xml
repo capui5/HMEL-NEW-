@@ -1059,6 +1059,10 @@
                                                                             text="Select Dependent:"
                                                                             class="detaillabel"
                                                                         />
+                                                                        <Label
+                                                                            text="Submitted Date:"
+                                                                            class="detaillabel"
+                                                                        />
                                                                     </VBox>
                                                                     <VBox>
                                                                         <Text
@@ -1100,6 +1104,11 @@
                                                                             text="{claimModel>/selectedDependent}"
                                                                             class="claimtext"
                                                                             id="claimsde"
+                                                                        />
+                                                                        <Text
+                                                                            class="datetext"
+                                                                            id="dateDisplay"
+                                                                            text="{CurrentDate>/currentDate}"
                                                                         />
                                                                     </VBox>
                                                                 </HBox>
@@ -1317,7 +1326,7 @@
                         >
                             <Text text="Requested Amount" />
                         </Column>
-                         <Column
+                        <Column
                             minScreenWidth="Tablet"
                             demandPopin="true"
                             width="8em"
@@ -1325,7 +1334,7 @@
                         >
                             <Text text="Status" />
                         </Column>
-                         
+
                         <Column
                             hAlign="Center"
                             demandPopin="true"
@@ -1343,15 +1352,21 @@
                                 <Text
                                     text="{path: 'MainModel>PERSON_NUMBER', formatter: '.formatPersonNumber'}"
                                 />
-                              
-                              <!-- <Text text="{MainModel>SUBMITTED_DATE}" /> -->
-                              <Text text="{path: 'MainModel>SUBMITTED_DATE', formatter: '.SubmitDate'}" />
+
+                                <!-- <Text text="{MainModel>SUBMITTED_DATE}" /> -->
+                                <Text
+                                    text="{path: 'MainModel>SUBMITTED_DATE', formatter: '.SubmitDate'}"
+                                />
 
                                 <Text text="{MainModel>CLAIM_TYPE}" />
                                 <Text text="{MainModel>TREATMENT_FOR}" />
                                 <Text text="{MainModel>SELECT_DEPENDENTS}" />
                                 <Text text="{MainModel>REQUESTED_AMOUNT}" />
-                                    <Text text="{MainModel>CURRENT_STATUS}" />
+                                <!-- <Text text="{MainModel>CURRENT_STATUS}" /> -->
+                                <Text
+                                    text="{path: 'MainModel>CURRENT_STATUS', formatter: '.formatStatus'}"
+                                />
+
                                 <Button
                                     icon="sap-icon://add"
                                     press="onCustomerPress"
@@ -1444,7 +1459,10 @@
                                 <Text text="{MainModel>TREATMENT_FOR}" />
                                 <Text text="{MainModel>SELECT_DEPENDENTS}" />
                                 <Text text="{MainModel>REQUESTED_AMOUNT}" />
-                                <Text text="{MainModel>STATUS}" />
+                                <!-- <Text text="{MainModel>STATUS}" /> -->
+                                <Text
+                                    text="{path: 'MainModel>STATUS', formatter: '.formatStatus'}"
+                                />
                                 <Text text="{MainModel>APPROVED_AMOUNT}" />
                             </cells>
                         </ColumnListItem>

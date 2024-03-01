@@ -44,9 +44,33 @@ sap.ui.define([
                 oComboBox.attachChange(this.onTreatmentChange, this);
 
                 // this.oMockServer = new MockServer();
-                // this.oMockServer.oModel = oModel;    
+                // this.oMockServer.oModel = oModel;   
+                var oDateFormat = DateFormat.getDateTimeInstance({ pattern: "yyyy/MM/dd" });
+            this.updateCurrentDate(oDateFormat);
+            this.scheduleDailyUpdate(oDateFormat); 
 
             },
+
+            dateFormatter: function (date) {
+                var oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
+                    pattern: "yyyy/MM/dd"
+                });
+                return oDateFormat.format(new Date(date));
+            },
+            updateCurrentDate: function (oDateFormat) {
+                var currentDate = new Date();
+                var formattedDate = oDateFormat.format(currentDate);
+                var oModel = new JSONModel({ currentDate: formattedDate });
+                this.getView().setModel(oModel, "CurrentDate");
+            },
+    
+            scheduleDailyUpdate: function (oDateFormat) {
+                var self = this;
+                setInterval(function () {
+                    self.updateCurrentDate(oDateFormat);
+                }, 24 * 60 * 60 * 1000);
+            },
+            
             formatDate: function (date) {
                 if (!date) {
                     return "";
@@ -70,7 +94,10 @@ sap.ui.define([
                 // Format the date
                 var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "MMM dd, yyyy" });
                 return oDateFormat.format(date);
-            },            
+            }, 
+            formatStatus: function(status) {
+                return status ? status : "Submitted";
+            },                       
             formatClaimId: function(sClaimId) {
                 // Remove commas from the CLAIM_ID
                 return sClaimId.replace(/,/g, '');
@@ -900,6 +927,9 @@ sap.ui.define([
                 var that = this;
                 var AD = this.getView().getModel("claimModel").getData();
                 let allDetails = AD.allDetails;
+
+                var currentDate = new Date().toISOString().split('T')[0];
+
             
                 // Fetch maximum CLAIM_ID from CLAIM_DETAILS
                 fetch("./odata/v4/my/CLAIM_DETAILS?$orderby=CLAIM_ID desc&$top=1")
@@ -938,6 +968,7 @@ sap.ui.define([
                                 TREATMENT_FOR: treatmentFor,
                                 TREATMENT_FOR_IF_OTHERS: treatmentForOther,
                                 SELECT_DEPENDENTS: selectedDependent,
+                                SUBMITTED_DATE:currentDate,
                                 REQUESTED_AMOUNT: requestamount,
                                 CONSULTANCY_CATEGORY: consultancyCategory,
                                 MEDICAL_STORE: hospitalStore,
@@ -945,6 +976,7 @@ sap.ui.define([
                                 BILL_NO: billNo,
                                 BILL_AMOUNT: billAmount,
                                 DISCOUNT: discount
+                              
             
                             };
             
