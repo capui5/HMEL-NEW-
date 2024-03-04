@@ -810,7 +810,7 @@ sap.ui.define([
                 }
 
                 // Update the text of the label with the total requested amount
-                this.byId("totalRequestedAmountLabel").setText("Total Requested Amount: " + totalRequestedAmount);
+                this.byId("totalRequestedAmountLabel").setText("Total Amount: " + totalRequestedAmount);
                 // this.byId("totalRequestedAmount").setText("Total Requested Amount: " + totalRequestedAmount);
                 this.byId("totalRequestedAmountValue").setText(totalRequestedAmount);
             },

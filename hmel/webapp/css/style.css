@@ -15,6 +15,12 @@
 
 }
 
+@media only screen and (max-width: 600px) {
+    .page1 {
+        background-size: 100% 100%; /* Cover the entire screen */
+    }
+}
+
 .hellotable {
     background-color: antiquewhite;
 }
@@ -74,7 +80,7 @@
 .add .sapMBtnInner {
     background-color: rgb(230, 120, 23);
     height: 30px;
-    width: 100px;
+    width: 80px;
     border: none;
 
 }
@@ -175,13 +181,13 @@
 .requestlabel {
     font-size: large;
     font-weight: 700;
-    padding-left: 6.5rem;
+    
 }
 
 .request {
     font-size: large;
     font-weight: 600;
-    padding-left: 25rem;
+    /* padding-left: 12rem; */
 
 }
 
@@ -220,14 +226,14 @@
 .detailtext {
     font-size: medium;
     font-weight: light;
-    padding-top: 10px;
+    padding-top: 12px;
     padding-left: 10px;
 }
 
 .claimtext {
     font-size: medium;
     font-weight: light;
-    padding-top: 10px;
+    padding-top: 12px;
     padding-left: 10px;
 }
 
@@ -256,6 +262,81 @@
 
 .item {
     margin: 20px;
+}
+/* .buttonsAndTotal {
+    display: flex;
+    flex-direction: column;
+}
+
+.buttonsAndTotal .buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.buttonsAndTotal .button {
+    flex-grow: 1;
+    margin: 5px;
+}
+
+.buttonsAndTotal .totalRequestedAmountLabel {
+    margin-top: 20px;
+}
+
+@media only screen and (max-width: 1024px) {
+    .buttonsAndTotal .buttons-container {
+        flex-direction: column;
+    }
+} */
+
+.details-column {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex-item-left,
+.flex-item-right {
+    flex: 50%;
+}
+
+/* Responsive layout - makes a one-column layout instead of a two-column layout only on mobile */
+@media (max-width: 800px) and (max-device-width: 600px) {
+    .details-column .flex-item-right,
+    .details-column .flex-item-left {
+        flex: 100%;
+    }
+
+    .details-column .flex-item-right .detail,
+    .details-column .flex-item-left .detail {
+        font-size: medium;
+        font-weight: light;
+        padding-top: 0rem; /* Adjust the padding top */
+        padding-left: 10px;
+    }
+}
+
+
+@media (max-width: 800px) {
+    .details-column {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .details-column .detaillabel {
+        flex-basis: 50%;
+        margin-bottom: 5px;
+    }
+
+    .details-column .detailtext {
+        flex-basis: 50%;
+    }
+
+    .details-column .item {
+        flex-direction: column;
+    }
+
+    .details-column .details-column {
+        flex-basis: 100%;
+    }
 }
 
 

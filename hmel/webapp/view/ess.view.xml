@@ -572,67 +572,58 @@
                                         </f:formContainers>
                                     </f:Form>
 
-                                    <HBox class="buttonsAndTotal">
-                                        <!-- Left-aligned buttons -->
-                                        <VBox>
-                                            <HBox>
-                                                <Button
-                                                    id="button"
-                                                    text="Add"
-                                                    press="addPress"
-                                                    class="add"
-                                                />
+                                    <OverflowToolbar id="otbFooter">
+                                        <Label
+                                            id="totalRequestedAmountLabel"
+                                            text="Total Amount:"
+                                            class="requestlabel"
+                                        />
+                                        <ToolbarSpacer />
 
-                                                <Button
-                                                    id="button2"
-                                                    text="Delete"
-                                                    press="deletePress"
-                                                    class="add"
-                                                />
+                                        <Button
+                                            id="button"
+                                            text="Add"
+                                            press="addPress"
+                                            class="add"
+                                        />
 
-                                                <Button
-                                                    id="button3"
-                                                    text="Edit"
-                                                    press="EditPress"
-                                                    class="add"
-                                                />
+                                        <Button
+                                            id="button2"
+                                            text="Delete"
+                                            press="deletePress"
+                                            class="add"
+                                        />
 
-                                                <Button
-                                                    text="Update"
-                                                    id="buttonUpdate"
-                                                    press="UpdatePress"
-                                                    visible="false"
-                                                    class="add"
-                                                />
+                                        <Button
+                                            id="button3"
+                                            text="Edit"
+                                            press="EditPress"
+                                            class="add"
+                                        />
 
-                                                <Button
-                                                    text="Cancel"
-                                                    id="buttonCancel"
-                                                    press="CancelPress"
-                                                    visible="false"
-                                                    class="add"
-                                                />
+                                        <Button
+                                            text="Update"
+                                            id="buttonUpdate"
+                                            press="UpdatePress"
+                                            visible="false"
+                                            class="add"
+                                        />
 
-                                                <Button
-                                                    id="button4"
-                                                    text="Clone"
-                                                    press="clonePress"
-                                                    class="add"
-                                                />
-                                            </HBox>
-                                        </VBox>
+                                        <Button
+                                            text="Cancel"
+                                            id="buttonCancel"
+                                            press="CancelPress"
+                                            visible="false"
+                                            class="add"
+                                        />
 
-                                        <VBox
-                                            justifyContent="End"
-                                            width="100%"
-                                        >
-                                            <Label
-                                                id="totalRequestedAmountLabel"
-                                                text="Total Requested Amount:"
-                                                class="requestlabel"
-                                            />
-                                        </VBox>
-                                    </HBox>
+                                        <Button
+                                            id="button4"
+                                            text="Clone"
+                                            press="clonePress"
+                                            class="add"
+                                        />
+                                    </OverflowToolbar>
                                 </Panel>
 
                                 <Panel>
@@ -644,7 +635,7 @@
                                         <items>
                                             <CustomListItem>
                                                 <HBox>
-                                                    <VBox>
+                                                    <VBox class="details-column">
                                                         <Label
                                                             text="Consultancy Category:"
                                                             class="detaillabel"
@@ -695,7 +686,7 @@
                                                             class="detaillabel"
                                                         />
                                                     </VBox>
-                                                    <VBox>
+                                                    <VBox class="details-column">
                                                         <Text
                                                             text="{claimModel>category}"
                                                             class="detail"
@@ -978,21 +969,21 @@
                                 text="Review"
                             >
                                 <VBox class="sapUiSmallMargin">
-                                    <HBox justifyContent="SpaceBetween">
-                                        <Title
-                                            text="Review Details"
+                                    <OverflowToolbar id="otFooter">
+                                        <!-- <Title
+                                            text="Review"
                                             class="reviewlabel"
-                                        />
+                                        /> -->
                                         <Label
                                             id="totalRequestedAmount"
-                                            text="Total Requested Amount: "
+                                            text="Total Amount: "
                                             class="request"
                                         />
                                         <Text
                                             id="totalRequestedAmountValue"
                                             class="requesttext"
                                         />
-                                    </HBox>
+                                    </OverflowToolbar>
                                     <f:Form
                                         id="FormDisplay354wideDual"
                                         editable="false"
@@ -1025,7 +1016,7 @@
                                                                 <HBox
                                                                     class="item"
                                                                 >
-                                                                    <VBox>
+                                                                    <VBox class="details-column">
                                                                         <Label
                                                                             text="Claim ID:"
                                                                             class="detaillabel"
@@ -1064,7 +1055,7 @@
                                                                             class="detaillabel"
                                                                         />
                                                                     </VBox>
-                                                                    <VBox>
+                                                                    <VBox class="details-column">
                                                                         <Text
                                                                             text="{claimModel>/claimId}"
                                                                             class="claimtext"
@@ -1106,7 +1097,7 @@
                                                                             id="claimsde"
                                                                         />
                                                                         <Text
-                                                                            class="datetext"
+                                                                            class="claimtext"
                                                                             id="dateDisplay"
                                                                             text="{CurrentDate>/currentDate}"
                                                                         />
@@ -1129,7 +1120,7 @@
                                                                 <HBox
                                                                     class="item"
                                                                 >
-                                                                    <VBox>
+                                                                    <VBox class="details-column">
                                                                         <Label
                                                                             text="Consultancy Category:"
                                                                             class="detaillabel"
@@ -1163,7 +1154,7 @@
                                                                             class="detaillabel"
                                                                         />
                                                                     </VBox>
-                                                                    <VBox>
+                                                                    <VBox class="details-column">
                                                                         <Text
                                                                             text="{claimModel>category}"
                                                                             class="detailtext"
