@@ -309,7 +309,7 @@
     .details-column .flex-item-left .detail {
         font-size: medium;
         font-weight: light;
-        padding-top: 0rem; /* Adjust the padding top */
+        padding-top: 3rem; /* Adjust the padding top */
         padding-left: 10px;
     }
 }
