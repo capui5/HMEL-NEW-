@@ -754,7 +754,7 @@ sap.ui.define([
                 this.byId("HospitalStore").setSelectedKey(details.hospitalStore);
                 this.byId("Hospitallocation").setSelectedKey(details.hospitalLocation);
                 this.byId("HL").setValue(details.hospitalLocationOther);
-                this.byId("billdate").setValue(new Date(formattedDate));
+                this.byId("billdate").setValue(formattedDate);
                 this.byId("billno").setValue(details.billNo);
                 this.byId("billamount").setValue(details.billAmount);
                 this.byId("discount").setValue(details.discount);
