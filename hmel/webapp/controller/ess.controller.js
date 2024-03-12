@@ -46,8 +46,8 @@ sap.ui.define([
                 // this.oMockServer = new MockServer();
                 // this.oMockServer.oModel = oModel;   
                 var oDateFormat = DateFormat.getDateTimeInstance({ pattern: "yyyy/MM/dd" });
-            this.updateCurrentDate(oDateFormat);
-            this.scheduleDailyUpdate(oDateFormat); 
+                this.updateCurrentDate(oDateFormat);
+                this.scheduleDailyUpdate(oDateFormat);
 
             },
 
@@ -63,14 +63,14 @@ sap.ui.define([
                 var oModel = new JSONModel({ currentDate: formattedDate });
                 this.getView().setModel(oModel, "CurrentDate");
             },
-    
+
             scheduleDailyUpdate: function (oDateFormat) {
                 var self = this;
                 setInterval(function () {
                     self.updateCurrentDate(oDateFormat);
                 }, 24 * 60 * 60 * 1000);
             },
-            
+
             // formatDate: function (date) {
             //     if (!date) {
             //         return "";
@@ -82,41 +82,41 @@ sap.ui.define([
                 if (!date) {
                     return "";
                 }
-            
+
                 var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
                     pattern: "MMM d, yyyy"
                 });
-            
+
                 return oDateFormat.format(date);
             },
-            SubmitDate: function(dateString) {
+            SubmitDate: function (dateString) {
                 if (!dateString) {
                     return "";
                 }
-            
+
                 // Create a Date object from the string
                 var date = new Date(dateString);
-            
+
                 // Check if the date is valid
                 if (isNaN(date.getTime())) {
                     return "";
                 }
-            
+
                 // Format the date
                 var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "MMM dd, yyyy" });
                 return oDateFormat.format(date);
-            }, 
-            formatStatus: function(status) {
+            },
+            formatStatus: function (status) {
                 return status ? status : "Submitted";
-            },                       
-            formatClaimId: function(sClaimId) {
+            },
+            formatClaimId: function (sClaimId) {
                 // Remove commas from the CLAIM_ID
                 return sClaimId.replace(/,/g, '');
             },
-            formatPersonNumber: function(sPersonNumber) {
+            formatPersonNumber: function (sPersonNumber) {
                 // Remove commas from the PERSON_NUMBER
                 return sPersonNumber.replace(/,/g, '');
-            },            
+            },
             onListItemPress: function (oEvent) {
                 var listItem = oEvent.getParameter("listItem");
 
@@ -474,37 +474,37 @@ sap.ui.define([
             addPress: function () {
                 // Get all the form values
                 var category = this.byId("consultancycategorys").getSelectedKey();
-                
+
                 // Check if category is selected
                 if (!category) {
                     MessageBox.error("Please select a category.");
                     return;
                 }
-                
+
                 // Get other form values
                 var startDate = this.byId("startDatePicker1").getDateValue();
-                var startdate = sap.ui.core.format.DateFormat.getDateInstance({pattern: "yyyy-MM-dd"}).format(startDate);
-                
+                var startdate = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }).format(startDate);
+
                 var endDate = this.byId("endDatePicker1").getDateValue();
-                var enddate = sap.ui.core.format.DateFormat.getDateInstance({pattern: "yyyy-MM-dd"}).format(endDate);
-                
+                var enddate = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }).format(endDate);
+
                 var doctor = this.byId("DN").getValue();
                 var patientId = this.byId("ID").getValue();
                 var hospitalStore = this.byId("HospitalStore").getSelectedKey();
                 var hospitalLocation = this.byId("Hospitallocation").getSelectedKey();
                 var hospitalLocationOther = this.byId("HL").getValue();
                 var billDate = this.byId("billdate").getDateValue();
-                var billdate = sap.ui.core.format.DateFormat.getDateInstance({pattern: "yyyy-MM-dd"}).format(billDate);
-                
+                var billdate = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }).format(billDate);
+
                 var billNo = this.byId("billno").getValue();
                 var billAmount = this.byId("billamount").getValue();
                 var discount = this.byId("discount").getValue();
                 var requestedAmount = this.byId("requestamount").getValue();
                 var review = this.byId("description").getValue();
-                
+
                 // Initialize an array to store the names of missing fields
                 var missingFields = [];
-                
+
                 // Perform validation checks for missing fields
                 if (!doctor) missingFields.push("Doctor's Name");
                 if (!patientId) missingFields.push("Patient ID");
@@ -514,7 +514,7 @@ sap.ui.define([
                 if (!billNo) missingFields.push("Bill No");
                 if (!billAmount) missingFields.push("Bill Amount(Rs)");
                 if (!requestedAmount) missingFields.push("Requested Amount");
-                
+
                 // Check if any fields are missing
                 if (missingFields.length > 0) {
                     // Display an error message with the list of missing fields
@@ -522,46 +522,65 @@ sap.ui.define([
                     MessageBox.error(errorMessage);
                     return;
                 }
-                
+
                 // Perform validation
                 fetch("./odata/v4/my/validations(endDate=" + enddate + ",startDate=" + startdate + ",requestedAmount=" + requestedAmount + ",category='" + category + "')", {
                     method: "GET"
                 })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.value.success) {
-                        // Proceed with validation
-                        if (requestedAmount > data.value.finalAmount) {
-                            // Show information message
-                            var eligibleAmountMessage = "Your eligible amount is: " + data.value.finalAmount;
-                            MessageBox.information(eligibleAmountMessage, {
-                                onClose: function (oAction) {
-                                    if (oAction === MessageBox.Action.OK) {
-                                        // Add details to model
-                                        var details = {
-                                            category: category,
-                                            doctor: doctor,
-                                            patientId: patientId,
-                                            hospitalStore: hospitalStore,
-                                            hospitalLocation: hospitalLocation,
-                                            hospitalLocationOther: hospitalLocationOther,
-                                            billDate: billdate,
-                                            billNo: billNo,
-                                            billAmount: billAmount,
-                                            discount: discount,
-                                            requestedAmount: data.value.finalAmount,
-                                            review: review,
-                                        };
-                                        this.addDetailsToModel(details);
-                                    }
-                                }.bind(this)
-                            });
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.value.success) {
+                            // Proceed with validation
+                            if (requestedAmount > data.value.finalAmount) {
+                                // Show information message
+                                var eligibleAmountMessage = "Your eligible amount is: " + data.value.finalAmount;
+                                MessageBox.information(eligibleAmountMessage, {
+                                    onClose: function (oAction) {
+                                        if (oAction === MessageBox.Action.OK) {
+                                            // Add details to model
+                                            var details = {
+                                                category: category,
+                                                doctor: doctor,
+                                                patientId: patientId,
+                                                hospitalStore: hospitalStore,
+                                                hospitalLocation: hospitalLocation,
+                                                hospitalLocationOther: hospitalLocationOther,
+                                                billDate: billdate,
+                                                billNo: billNo,
+                                                billAmount: billAmount,
+                                                discount: discount,
+                                                requestedAmount: data.value.finalAmount,
+                                                review: review,
+                                            };
+                                            this.addDetailsToModel(details);
+                                        }
+                                    }.bind(this)
+                                });
+                            } else {
+                                // Add details to model
+                                var details = {
+                                    category: category,
+                                    doctor: doctor,
+                                    patientId: patientId,
+                                    hospitalStore: hospitalStore,
+                                    hospitalLocation: hospitalLocation,
+                                    hospitalLocationOther: hospitalLocationOther,
+                                    billDate: billDate,
+                                    billNo: billNo,
+                                    billAmount: billAmount,
+                                    discount: discount,
+                                    requestedAmount: requestedAmount,
+                                    review: review,
+                                };
+                                this.addDetailsToModel(details);
+                            }
                         } else {
+                            // Category not found, directly add details
                             // Add details to model
                             var details = {
                                 category: category,
@@ -579,35 +598,16 @@ sap.ui.define([
                             };
                             this.addDetailsToModel(details);
                         }
-                    } else {
-                        // Category not found, directly add details
-                        // Add details to model
-                        var details = {
-                            category: category,
-                            doctor: doctor,
-                            patientId: patientId,
-                            hospitalStore: hospitalStore,
-                            hospitalLocation: hospitalLocation,
-                            hospitalLocationOther: hospitalLocationOther,
-                            billDate: billDate,
-                            billNo: billNo,
-                            billAmount: billAmount,
-                            discount: discount,
-                            requestedAmount: requestedAmount,
-                            review: review,
-                        };
-                        this.addDetailsToModel(details);
-                    }
-                })
-                .catch(error => {
-                    // Show error message
-                    MessageBox.error("Error occurred while fetching data");
-                    console.error('Error:', error);
-                });
+                    })
+                    .catch(error => {
+                        // Show error message
+                        MessageBox.error("Error occurred while fetching data");
+                        console.error('Error:', error);
+                    });
             },
-            
-            
-            addDetailsToModel: function(details) {
+
+
+            addDetailsToModel: function (details) {
                 var detailsModel = this.getView().getModel("claimModel");
                 if (!detailsModel) {
                     detailsModel = new sap.ui.model.json.JSONModel();
@@ -619,7 +619,7 @@ sap.ui.define([
                 this.clearForm();
                 this.updateTotalRequestedAmount();
             },
-            
+
 
             clearForm: function () {
                 this.byId("consultancycategorys").setSelectedKey("");
@@ -710,37 +710,6 @@ sap.ui.define([
 
             },
 
-            // clonePress: function () {
-            //     var list = this.byId("detailsList");
-            //     var selectedItems = list.getSelectedItems();
-            
-            //     // Check if any items are selected
-            //     if (selectedItems.length !== 1) {
-            //         MessageBox.error("Please select exactly one item to clone.");
-            //         return;
-            //     }
-            
-            //     // Get the context of the selected item
-            //     var selectedContext = selectedItems[0].getBindingContext("claimModel");
-            
-            //     // Get the data of the selected item from the model
-            //     var selectedData = selectedContext.getProperty();
-            
-            //     // Clone the data (create a shallow copy)
-            //     var clonedData = Object.assign({}, selectedData);
-            
-            //     // Format the bill date before cloning
-            //     clonedData.billDate = this.formatDate(clonedData.billDate);
-            
-            //     // Set the form values directly with the cloned data
-            //     this.setFormValues(clonedData);
-            
-            //     MessageBox.success("Item cloned successfully.");
-            
-            //     // Clear the selection in the list
-            //     this.byId("detailsList").removeSelections();
-            // },
-            
 
             setFormValues: function (details) {
                 var date = new Date(details.billDate);
@@ -786,26 +755,87 @@ sap.ui.define([
             },
 
 
+            // UpdatePress: function () {
+            //     var list = this.byId("detailsList");
+            //     var selectedItems = list.getSelectedItems();
+
+            //     if (selectedItems.length !== 1) {
+            //         MessageBox.error("Please select exactly one item to update.");
+            //         return;
+            //     }
+
+            //     // Get the selected item's binding context
+            //     var selectedContext = selectedItems[0].getBindingContext("claimModel");
+
+            //     if (!selectedContext) {
+            //         MessageBox.error("No data to update.");
+            //         return;
+            //     }
+
+            //     // Get the data of the selected item from the model
+            //     var selectedData = selectedContext.getProperty();
+
+            //     // Assuming you have form fields that represent the properties you want to update
+            //     var updatedData = {
+            //         category: this.byId("consultancycategorys").getSelectedKey(),
+            //         doctor: this.byId("DN").getValue(),
+            //         patientId: this.byId("ID").getValue(),
+            //         hospitalStore: this.byId("HospitalStore").getSelectedKey(),
+            //         hospitalLocation: this.byId("Hospitallocation").getSelectedKey(),
+            //         hospitalLocationOther: this.byId("HL").getValue(),
+            //         billDate: this.byId("billdate").getDateValue(),
+            //         billNo: this.byId("billno").getValue(),
+            //         billAmount: this.byId("billamount").getValue(),
+            //         discount: this.byId("discount").getValue(),
+            //         requestedAmount: this.byId("requestamount").getValue(),
+            //         review: this.byId("description").getValue()
+
+            //     };
+
+            //     // Update the existing item with the new data
+            //     Object.assign(selectedData, updatedData);
+
+            //     // Example: Update the existing item in the model
+            //     var detailsModel = this.getView().getModel("claimModel");
+            //     var allDetails = detailsModel.getProperty("/allDetails");
+            //     var selectedIndex = selectedContext.getPath().split("/").pop();
+            //     allDetails[selectedIndex] = selectedData;
+            //     detailsModel.setProperty("/allDetails", allDetails);
+
+            //     // Enable form fields after updating
+            //     this.enableFormFields(true);
+
+            //     // Show the Add, Delete, Edit, Clone buttons, hide the Update and Cancel buttons
+            //     this.toggleButtonsVisibility(true, false, false, true, true);
+
+            //     // Refresh the list binding to reflect the updated data
+            //     this.byId("detailsList").getBinding("items").refresh();
+
+            //     MessageBox.success("Data updated successfully.");
+            //     this.clearForm();
+            //     this.byId("detailsList").removeSelections();
+
+            //     this.updateTotalRequestedAmount();
+            // },
+
             UpdatePress: function () {
                 var list = this.byId("detailsList");
                 var selectedItems = list.getSelectedItems();
-
+            
                 if (selectedItems.length !== 1) {
                     MessageBox.error("Please select exactly one item to update.");
                     return;
                 }
-
-                // Get the selected item's binding context
+            
                 var selectedContext = selectedItems[0].getBindingContext("claimModel");
-
+            
                 if (!selectedContext) {
                     MessageBox.error("No data to update.");
                     return;
                 }
-
-                // Get the data of the selected item from the model
-                var selectedData = selectedContext.getProperty();
-
+            
+                var selectedData = selectedContext.getObject();
+            
                 // Assuming you have form fields that represent the properties you want to update
                 var updatedData = {
                     category: this.byId("consultancycategorys").getSelectedKey(),
@@ -818,36 +848,88 @@ sap.ui.define([
                     billNo: this.byId("billno").getValue(),
                     billAmount: this.byId("billamount").getValue(),
                     discount: this.byId("discount").getValue(),
-                    requestedAmount: this.byId("requestamount").getValue(),
+                    requestedAmount: this.byId("requestamount").getValue(), // Include requestedAmount here
                     review: this.byId("description").getValue()
-
                 };
+            
+                var missingFields = [];
+            
+                if (!updatedData.doctor) missingFields.push("Doctor's Name");
+                if (!updatedData.patientId) missingFields.push("Patient ID");
+                if (!updatedData.hospitalStore) missingFields.push("Hospital/Medical Store");
+                if (!updatedData.hospitalLocation) missingFields.push("Hospital Location");
+                if (!updatedData.billDate) missingFields.push("Bill Date");
+                if (!updatedData.billNo) missingFields.push("Bill No");
+                if (!updatedData.billAmount) missingFields.push("Bill Amount(Rs)");
+                if (!updatedData.requestedAmount) missingFields.push("Requested Amount");
+            
+                if (missingFields.length > 0) {
+                    var errorMessage = "Please fill in the following required fields:\n" + missingFields.join("\n");
+                    MessageBox.error(errorMessage);
+                    return;
+                }
+            
+                // Perform server-side validation
+                var startDate = this.byId("startDatePicker1").getDateValue();
+                var startDate = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }).format(startDate);
+                var endDate = this.byId("endDatePicker1").getDateValue();
+                var endDate = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }).format(endDate);
+            
+                var requestedAmount = updatedData.requestedAmount; // Define requestedAmount here
+            
+                // Assuming you have the necessary data for validation in updatedData and selectedData
+                // Call your server-side validation function
+                fetch("./odata/v4/my/validations(endDate=" + endDate + ",startDate=" + startDate + ",requestedAmount=" + requestedAmount + ",category='" + updatedData.category + "')", {
+                    method: "GET"
+                })
+                    .then(function (response) {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        if (data.value.success) {
+                            // Update requestedAmount to match finalAmount from the response
+                            updatedData.requestedAmount = data.value.finalAmount;
+            
+                            // Proceed with the update if validation passes
+                            // Update the existing item with the new data
+                            Object.assign(selectedData, updatedData);
+            
+                            var detailsModel = this.getView().getModel("claimModel");
+                            var allDetails = detailsModel.getProperty("/allDetails");
+                            var selectedIndex = selectedContext.getPath().split("/").pop();
+                            allDetails[selectedIndex] = selectedData;
+                            detailsModel.setProperty("/allDetails", allDetails);
+            
+                            // Enable form fields after updating
+                            this.enableFormFields(true);
+            
+                            // Show the Add, Delete, Edit, Clone buttons, hide the Update and Cancel buttons
+                            this.toggleButtonsVisibility(true, false, false, true, true);
+            
+                            // Refresh the list binding to reflect the updated data
+                            this.byId("detailsList").getBinding("items").refresh();
+            
+                            MessageBox.success("Data updated successfully!\nYour Eligible Amount is " + data.value.finalAmount);
 
-                // Update the existing item with the new data
-                Object.assign(selectedData, updatedData);
+                            this.clearForm();
+                            this.byId("detailsList").removeSelections();
+            
+                            this.updateTotalRequestedAmount();
+                        } else {
+                            // Server-side validation failed
+                            MessageBox.error("Server-side validation failed: " + data.value.errorMessage);
+                        }
+                    }.bind(this))
+                    .catch(function (error) {
+                        // Error occurred while fetching data or processing the validation
+                        MessageBox.error("Error occurred while fetching or processing validation data");
+                        console.error('Error:', error);
+                    });
+            },            
 
-                // Example: Update the existing item in the model
-                var detailsModel = this.getView().getModel("claimModel");
-                var allDetails = detailsModel.getProperty("/allDetails");
-                var selectedIndex = selectedContext.getPath().split("/").pop();
-                allDetails[selectedIndex] = selectedData;
-                detailsModel.setProperty("/allDetails", allDetails);
-
-                // Enable form fields after updating
-                this.enableFormFields(true);
-
-                // Show the Add, Delete, Edit, Clone buttons, hide the Update and Cancel buttons
-                this.toggleButtonsVisibility(true, false, false, true, true);
-
-                // Refresh the list binding to reflect the updated data
-                this.byId("detailsList").getBinding("items").refresh();
-
-                MessageBox.success("Data updated successfully.");
-                this.clearForm();
-                this.byId("detailsList").removeSelections();
-
-                this.updateTotalRequestedAmount();
-            },
 
             CancelPress: function () {
                 // Disable form fields after canceling
@@ -1124,13 +1206,13 @@ sap.ui.define([
 
                 var currentDate = new Date().toISOString().split('T')[0];
 
-            
+
                 // Fetch maximum CLAIM_ID from CLAIM_DETAILS
                 fetch("./odata/v4/my/CLAIM_DETAILS?$orderby=CLAIM_ID desc&$top=1")
                     .then(response => response.json())
                     .then(data => {
                         var maxClaimId = data.value.length > 0 ? data.value[0].CLAIM_ID : 0;
-            
+
                         // Iterate over each detail item and send the claim individually
                         allDetails.forEach(function (detail) {
                             // Construct claim object for each detail
@@ -1150,8 +1232,8 @@ sap.ui.define([
                             var billNo = detail.billNo;
                             var billAmount = parseFloat(detail.billAmount);
                             var discount = parseFloat(detail.discount);
-            
-            
+
+
                             // Create a new claim object for each detail
                             var newClaim = {
                                 CLAIM_ID: claimid,
@@ -1162,7 +1244,7 @@ sap.ui.define([
                                 TREATMENT_FOR: treatmentFor,
                                 TREATMENT_FOR_IF_OTHERS: treatmentForOther,
                                 SELECT_DEPENDENTS: selectedDependent,
-                                SUBMITTED_DATE:currentDate,
+                                SUBMITTED_DATE: currentDate,
                                 REQUESTED_AMOUNT: requestamount,
                                 CONSULTANCY_CATEGORY: consultancyCategory,
                                 MEDICAL_STORE: hospitalStore,
@@ -1170,10 +1252,10 @@ sap.ui.define([
                                 BILL_NO: billNo,
                                 BILL_AMOUNT: billAmount,
                                 DISCOUNT: discount
-                              
-            
+
+
                             };
-            
+
                             // Send the claim data to the server using Fetch API
                             fetch("./odata/v4/my/CLAIM_DETAILS", {
                                 method: "POST",
@@ -1203,7 +1285,7 @@ sap.ui.define([
                     .catch(error => {
                         sap.m.MessageBox.error("Error while fetching maximum CLAIM_ID");
                     });
-            },            
+            },
             onCustomerPress: function (oEvent) {
                 var oButton = oEvent.getSource();
                 var sClaimId = oButton.getBindingContext("MainModel").getProperty("CLAIM_ID");
@@ -1240,11 +1322,11 @@ sap.ui.define([
             // onOpenDialog: function(sClaimId) {
             //     var oView = this.getView();
             //     var oDialog = oView.byId("manage");
-            
+
             //     var that = this; // Store 'this' reference
-            
+
             //     var sUrl = "/odata/v4/my/ZHRMEDICLAIM?$filter=REFNR eq " + sClaimId;
-            
+
             //     $.ajax({
             //         url: sUrl,
             //         type: "GET",
@@ -1252,12 +1334,12 @@ sap.ui.define([
             //             console.log("Data:", response);
             //             if (response && response.value && response.value.length > 0) {
             //                 var data = response.value[0];
-            
+
             //                 if (!oDialog) {
             //                     oDialog = sap.ui.xmlfragment(oView.getId(), "hmel.fragments.manage", that);
             //                     oView.addDependent(oDialog);
             //                 }
-            
+
             //                 // Set values to UI elements
             //                 oDialog.setTitle("Claim ID: " + sClaimId);
             //                 oDialog.open();
@@ -1286,32 +1368,32 @@ sap.ui.define([
             //     });
             // },
 
-            onOpenDialog: function(sClaimId) {
+            onOpenDialog: function (sClaimId) {
                 var oView = this.getView();
                 var oDialog = oView.byId("manage");
                 var that = this; // Store 'this' reference
                 var sUrl = "./odata/v4/my/ZHRMEDICLAIM?$filter=REFNR eq " + sClaimId;
-            
+
                 // Get owner component
                 var oOwnerComponent = sap.ui.core.Component.getOwnerComponentFor(this);
-            
+
                 fetch(sUrl)
-                    .then(function(response) {
+                    .then(function (response) {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
                         }
                         return response.json();
                     })
-                    .then(function(data) {
+                    .then(function (data) {
                         console.log("Data:", data);
                         if (data && data.value && data.value.length > 0) {
                             var claimData = data.value[0];
-            
+
                             if (!oDialog) {
                                 oDialog = sap.ui.xmlfragment(oView.getId(), "hmel.fragments.manage", that);
                                 oView.addDependent(oDialog);
                             }
-            
+
                             // Set values to UI elements
                             oDialog.setTitle("Claim ID: " + sClaimId);
                             oDialog.open();
@@ -1340,14 +1422,14 @@ sap.ui.define([
                             oView.byId("documentstatus").setValue("Submitted");
                         }
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.error("Error:", error);
                         sap.m.MessageBox.error("Error retrieving data for Claim ID: " + sClaimId);
                     });
             },
-            
-            
-                        
+
+
+
             // onCloseFrag: function () {
             //     var oView = this.getView();
             //     var oDialog = oView.byId("manage");
@@ -1364,10 +1446,10 @@ sap.ui.define([
             //     oDialog.close();
             // },
 
-            onCloseFrag: function() {
+            onCloseFrag: function () {
                 var oView = this.getView();
                 var oDialog = oView.byId("manage");
-            
+
                 // Clearing input fields
                 oView.byId("batchno").setValue("");
                 oView.byId("documentstatus").setSelectedKey("");
@@ -1377,24 +1459,24 @@ sap.ui.define([
                 oView.byId("chequeno").setValue("");
                 oView.byId("hlremarks").setValue("");
                 oView.byId("approved").setValue("");
-            
+
                 if (oDialog) {
                     oDialog.close();
                 }
             },
 
-           
-          
+
+
             onSaveFrag: function () {
                 var oView = this.getView();
                 var oDialog = oView.byId("manage");
                 var sClaimId = this._sClaimId;
-            
+
                 // Check if sClaimId is not null or undefined
                 if (sClaimId) {
                     // Parse sClaimId as an integer
                     var iClaimId = parseInt(sClaimId);
-            
+
                     // Get all input values
                     var sBatchNo = oView.byId("batchno").getValue();
                     var sDocumentStatus = oView.byId("documentstatus").getValue();
@@ -1402,26 +1484,26 @@ sap.ui.define([
                     var sChequeNo = oView.byId("chequeno").getValue();
                     var sHLRemarks = oView.byId("hlremarks").getValue();
                     var sApprovedAmount = oView.byId("approved").getValue();
-            
+
                     // Get the settlement date value as a timestamp (in milliseconds)
                     var nSettlementTimestamp = Date.now();
                     var sSettlementDateISO = new Date(nSettlementTimestamp).toISOString();
-            
+
                     // Get the NIA date as a timestamp (in milliseconds)
                     var nNia = Date.now();
                     var sNiaISO = new Date(nNia).toISOString();
 
-                     // Default Approved amount to 0 if not provided
-                     if (!sApprovedAmount) {
+                    // Default Approved amount to 0 if not provided
+                    if (!sApprovedAmount) {
                         sApprovedAmount = 0;
                     } else {
                         // Ensure Approved amount is a valid integer
                         if (isNaN(parseInt(sApprovedAmount))) {
                             throw new Error("Invalid Approved amount");
                         }
-                        sApprovedAmount = parseInt(sApprovedAmount); 
+                        sApprovedAmount = parseInt(sApprovedAmount);
                     }
-            
+
                     var oPayloadZHRMEDICLAIM = {
                         REFNR: iClaimId,
                         SETTLEMENT_DATE: sSettlementDateISO,
@@ -1431,9 +1513,9 @@ sap.ui.define([
                         BATCH_NO: sBatchNo,
                         BANK_NAME: sBankName,
                         STATUS: sDocumentStatus,
-                        APPROVED_AMOUNT:sApprovedAmount
+                        APPROVED_AMOUNT: sApprovedAmount
                     };
-            
+
                     // Check for mandatory fields based on document status
                     if (sDocumentStatus === "Claim Settled") {
                         // Check if any mandatory fields are missing
@@ -1447,8 +1529,8 @@ sap.ui.define([
                             sap.m.MessageBox.error("Please fill in all mandatory fields");
                             return;
                         }
-                    } 
-            
+                    }
+
                     // Check if the REFNR exists using fetch
                     fetch("./odata/v4/my/statusUpdate(REFNR=" + iClaimId + ",Status='" + sDocumentStatus + "',Batch='" + sBatchNo + "',Nia='" + sNiaISO + "',Remark='" + sHLRemarks + "',Check='" + sChequeNo + "',Bank='" + sBankName + "',Approved=" + sApprovedAmount + ",Settlement='" + sSettlementDateISO + "')"
                     )
@@ -1478,9 +1560,9 @@ sap.ui.define([
                                                 oView.byId("settlementdate").setValue("");
                                                 oView.byId("nia").setValue("");
                                                 oView.byId("approved").setValue("");
-            
+
                                                 oDialog.close();
-            
+
                                                 location.reload();
                                                 // Navigate back to detail2
                                                 var oRouter = sap.ui.core.UIComponent.getRouterFor(oView);
@@ -1513,9 +1595,9 @@ sap.ui.define([
                                                 oView.byId("settlementdate").setValue("");
                                                 oView.byId("nia").setValue("");
                                                 oView.byId("approved").setValue("");
-            
+
                                                 oDialog.close();
-            
+
                                                 location.reload();
                                                 // Navigate back to detail2
                                                 var oRouter = sap.ui.core.UIComponent.getRouterFor(oView);
@@ -1536,7 +1618,7 @@ sap.ui.define([
                     sap.m.MessageBox.error("Invalid Claim ID");
                 }
             },
-            
+
             onStatusChange: function (oEvent) {
                 var sDocumentStatus = oEvent.getSource().getSelectedItem().getText();
                 var oBankDetails = this.getView().byId("bankname");
@@ -1560,13 +1642,13 @@ sap.ui.define([
                         oApprovedAmount.setEnabled(true);
                         oHLRemarks.setEnabled(true);
                         break;
-                  case "Claim sent back to employee":
-                            oBankDetails.setEnabled(false);
-                            oChequeNumber.setEnabled(false);
-                            oSettledDate.setEnabled(false);
-                            oApprovedAmount.setEnabled(false);
-                            oHLRemarks.setRequired(true);
-                            break; 
+                    case "Claim sent back to employee":
+                        oBankDetails.setEnabled(false);
+                        oChequeNumber.setEnabled(false);
+                        oSettledDate.setEnabled(false);
+                        oApprovedAmount.setEnabled(false);
+                        oHLRemarks.setRequired(true);
+                        break;
                     default:
                         // Other statuses
                         oBankDetails.setEnabled(false);
@@ -1582,7 +1664,7 @@ sap.ui.define([
             //     var searchString = event.getParameter("query");
             //     var oTable = this.getView().byId("managetable");
             //     var oBinding = oTable.getBinding("items");
-            
+
             //     // Apply search filter
             //     if (oBinding) {
             //         var oFilter = new sap.ui.model.Filter([
@@ -1598,65 +1680,65 @@ sap.ui.define([
             //         oBinding.filter(oFilter);
             //     }
             // },      
-            onSearch: function(event) {
+            onSearch: function (event) {
                 var searchString = event.getParameter("newValue");
                 var oTable = this.getView().byId("managetable");
                 var aItems = oTable.getItems(); // Get all items from the table
-                
+
                 // Apply search filter
                 if (searchString) {
                     searchString = searchString.toLowerCase(); // Convert search string to lowercase for case-insensitive search
-                    
+
                     // Iterate over each item and apply the filter
-                    aItems.forEach(function(oItem) {
+                    aItems.forEach(function (oItem) {
                         var bVisible = false; // Flag to track item visibility
-                        
+
                         // Get cells of the item and check if any text matches the search string
-                        oItem.getCells().forEach(function(oCell) {
+                        oItem.getCells().forEach(function (oCell) {
                             var cellText = oCell.getText().toLowerCase(); // Convert cell text to lowercase
                             if (cellText.includes(searchString)) {
                                 bVisible = true; // Set flag to true if search string is found
                             }
                         });
-                        
+
                         // Set item visibility based on the flag
                         oItem.setVisible(bVisible);
                     });
                 } else {
                     // If search string is empty, make all items visible
-                    aItems.forEach(function(oItem) {
+                    aItems.forEach(function (oItem) {
                         oItem.setVisible(true);
                     });
                 }
             },
 
-            onSearchClaim: function(event) {
+            onSearchClaim: function (event) {
                 var searchString = event.getParameter("newValue");
                 var oTable = this.getView().byId("reporttable");
                 var aItems = oTable.getItems(); // Get all items from the table
-                
+
                 // Apply search filter
                 if (searchString) {
                     searchString = searchString.toLowerCase(); // Convert search string to lowercase for case-insensitive search
-                    
+
                     // Iterate over each item and apply the filter
-                    aItems.forEach(function(oItem) {
+                    aItems.forEach(function (oItem) {
                         var bVisible = false; // Flag to track item visibility
-                        
+
                         // Get cells of the item and check if any text matches the search string
-                        oItem.getCells().forEach(function(oCell) {
+                        oItem.getCells().forEach(function (oCell) {
                             var cellText = oCell.getText().toLowerCase(); // Convert cell text to lowercase
                             if (cellText.includes(searchString)) {
                                 bVisible = true; // Set flag to true if search string is found
                             }
                         });
-                        
+
                         // Set item visibility based on the flag
                         oItem.setVisible(bVisible);
                     });
                 } else {
                     // If search string is empty, make all items visible
-                    aItems.forEach(function(oItem) {
+                    aItems.forEach(function (oItem) {
                         oItem.setVisible(true);
                     });
                 }
