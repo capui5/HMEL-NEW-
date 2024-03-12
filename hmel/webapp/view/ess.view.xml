@@ -38,11 +38,11 @@
                     <!-- Bottom Toolbar with Nav Button and Title -->
 
                     <Toolbar design="Transparent">
-                        <Image
+                        <!-- <Image
                             src="./images/logo.jpg"
                             width="40px"
                             height="30px"
-                        />
+                        /> -->
                     </Toolbar>
                 </customHeader>
 

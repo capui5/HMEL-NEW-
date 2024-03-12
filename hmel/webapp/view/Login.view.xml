@@ -32,12 +32,12 @@
                     <m:headerToolbar>
                         <m:OverflowToolbar>
                             <!-- Logo Image on top of the Title -->
-                            <m:Image
+                            <!-- <m:Image
                                 src="./images/logo.jpg"
                                 height="40px"
                                 width="50px"
                                 class="logoImage"
-                            />
+                            /> -->
                             <!-- Title for the Login Form -->
                             <m:Title text="Login Form" />
                             <!-- Spacer to push the Logo to the right -->
