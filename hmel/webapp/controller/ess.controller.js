@@ -474,35 +474,37 @@ sap.ui.define([
             addPress: function () {
                 // Get all the form values
                 var category = this.byId("consultancycategorys").getSelectedKey();
-            
+                
                 // Check if category is selected
                 if (!category) {
                     MessageBox.error("Please select a category.");
                     return;
                 }
-            
+                
                 // Get other form values
                 var startDate = this.byId("startDatePicker1").getDateValue();
-                var startdatewithstring = startDate.toISOString();
-                var startdate = startdatewithstring.split('T')[0];
+                var startdate = sap.ui.core.format.DateFormat.getDateInstance({pattern: "yyyy-MM-dd"}).format(startDate);
+                
                 var endDate = this.byId("endDatePicker1").getDateValue();
-                var endsatewithstring = endDate.toISOString();
-                var enddate = endsatewithstring.split('T')[0];
+                var enddate = sap.ui.core.format.DateFormat.getDateInstance({pattern: "yyyy-MM-dd"}).format(endDate);
+                
                 var doctor = this.byId("DN").getValue();
                 var patientId = this.byId("ID").getValue();
                 var hospitalStore = this.byId("HospitalStore").getSelectedKey();
                 var hospitalLocation = this.byId("Hospitallocation").getSelectedKey();
                 var hospitalLocationOther = this.byId("HL").getValue();
                 var billDate = this.byId("billdate").getDateValue();
+                var billdate = sap.ui.core.format.DateFormat.getDateInstance({pattern: "yyyy-MM-dd"}).format(billDate);
+                
                 var billNo = this.byId("billno").getValue();
                 var billAmount = this.byId("billamount").getValue();
                 var discount = this.byId("discount").getValue();
                 var requestedAmount = this.byId("requestamount").getValue();
                 var review = this.byId("description").getValue();
-            
+                
                 // Initialize an array to store the names of missing fields
                 var missingFields = [];
-            
+                
                 // Perform validation checks for missing fields
                 if (!doctor) missingFields.push("Doctor's Name");
                 if (!patientId) missingFields.push("Patient ID");
@@ -512,7 +514,7 @@ sap.ui.define([
                 if (!billNo) missingFields.push("Bill No");
                 if (!billAmount) missingFields.push("Bill Amount(Rs)");
                 if (!requestedAmount) missingFields.push("Requested Amount");
-            
+                
                 // Check if any fields are missing
                 if (missingFields.length > 0) {
                     // Display an error message with the list of missing fields
@@ -520,11 +522,11 @@ sap.ui.define([
                     MessageBox.error(errorMessage);
                     return;
                 }
-            
+                
                 // Perform validation
-                fetch("./odata/v4/my/validations(endDate=" + enddate + ",startDate=" + startdate + ",requestedAmount=" + requestedAmount + `,category='` + category + `')`, {
-                            method: "GET"
-                        })
+                fetch("./odata/v4/my/validations(endDate=" + enddate + ",startDate=" + startdate + ",requestedAmount=" + requestedAmount + ",category='" + category + "')", {
+                    method: "GET"
+                })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -548,7 +550,7 @@ sap.ui.define([
                                             hospitalStore: hospitalStore,
                                             hospitalLocation: hospitalLocation,
                                             hospitalLocationOther: hospitalLocationOther,
-                                            billDate: billDate,
+                                            billDate: billdate,
                                             billNo: billNo,
                                             billAmount: billAmount,
                                             discount: discount,
@@ -568,7 +570,7 @@ sap.ui.define([
                                 hospitalStore: hospitalStore,
                                 hospitalLocation: hospitalLocation,
                                 hospitalLocationOther: hospitalLocationOther,
-                                billDate: billDate,
+                                billDate: billdate,
                                 billNo: billNo,
                                 billAmount: billAmount,
                                 discount: discount,
@@ -587,7 +589,7 @@ sap.ui.define([
                             hospitalStore: hospitalStore,
                             hospitalLocation: hospitalLocation,
                             hospitalLocationOther: hospitalLocationOther,
-                            billDate: billDate,
+                            billDate: billdate,
                             billNo: billNo,
                             billAmount: billAmount,
                             discount: discount,
@@ -603,6 +605,7 @@ sap.ui.define([
                     console.error('Error:', error);
                 });
             },
+            
             
             addDetailsToModel: function(details) {
                 var detailsModel = this.getView().getModel("claimModel");
@@ -740,14 +743,21 @@ sap.ui.define([
             
 
             setFormValues: function (details) {
-                // Set form values directly
+                var date = new Date(details.billDate);
+                var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+                    pattern: "MMM d, yyyy"
+                });
+                var formattedDate = oDateFormat.format(date);
                 this.byId("consultancycategorys").setSelectedKey(details.category);
                 this.byId("DN").setValue(details.doctor);
                 this.byId("ID").setValue(details.patientId);
                 this.byId("HospitalStore").setSelectedKey(details.hospitalStore);
                 this.byId("Hospitallocation").setSelectedKey(details.hospitalLocation);
                 this.byId("HL").setValue(details.hospitalLocationOther);
-                this.byId("billdate").setValue(new Date(details.billDate));
+                this.byId("billdate").setValue(new Date(formattedDate));
+                // var formattedDate = sap.ui.core.format.DateFormat.getDateInstance({
+                //     pattern: "MM-dd-yyyy"
+                // }).format(new Date(details.billDate));
                 this.byId("billno").setValue(details.billNo);
                 this.byId("billamount").setValue(details.billAmount);
                 this.byId("discount").setValue(details.discount);
