@@ -1253,11 +1253,7 @@
                 >
                     <headerToolbar>
                         <Toolbar>
-                            <SearchField
-                                width="auto"
-                                search="onSearch"
-                                placeholder="Search"
-                            />
+                           <SearchField liveChange="onSearch" width="auto" />
                         </Toolbar>
                     </headerToolbar>
                     <columns>
@@ -1383,13 +1379,11 @@
                     items="{MainModel>/ClaimReports}"
                     sticky="ColumnHeaders"
                 >
-                    <Toolbar>
-                        <SearchField
-                            width="auto"
-                            search="onSearch"
-                            placeholder="Search"
-                        />
-                    </Toolbar>
+                   <headerToolbar>
+                        <Toolbar>
+                           <SearchField liveChange="onSearchClaim" width="auto" />
+                        </Toolbar>
+                    </headerToolbar>
                     <columns>
                         <Column
                             minScreenWidth="Desktop"

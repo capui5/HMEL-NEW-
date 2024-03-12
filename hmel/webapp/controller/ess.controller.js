@@ -71,11 +71,22 @@ sap.ui.define([
                 }, 24 * 60 * 60 * 1000);
             },
             
+            // formatDate: function (date) {
+            //     if (!date) {
+            //         return "";
+            //     }
+            //     var oDateFormat = DateFormat.getDateTimeInstance({ pattern: "yyyy-MM-dd" });
+            //     return oDateFormat.format(date);
+            // },
             formatDate: function (date) {
                 if (!date) {
                     return "";
                 }
-                var oDateFormat = DateFormat.getDateTimeInstance({ pattern: "yyyy-MM-dd" });
+            
+                var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+                    pattern: "MMM d, yyyy"
+                });
+            
                 return oDateFormat.format(date);
             },
             SubmitDate: function(dateString) {
@@ -339,16 +350,144 @@ sap.ui.define([
                 oClaimModel.setProperty("/selectedDependent", this.byId("SD").getSelectedKey());
             },
 
+            // addPress: function () {
+            //     // Get all the form values
+            //     var startDate = this.byId("startDatePicker1").getDateValue();
+            //     var startdatewithstring = startDate.toISOString();
+            //     var startdate = startdatewithstring.split('T')[0];
+            //     var endDate = this.byId("endDatePicker1").getDateValue();
+            //     var endsatewithstring = endDate.toISOString();
+            //     var enddate = endsatewithstring.split('T')[0];
+
+            //     var category = this.byId("consultancycategorys").getSelectedKey();
+            //     var doctor = this.byId("DN").getValue();
+            //     var patientId = this.byId("ID").getValue();
+            //     var hospitalStore = this.byId("HospitalStore").getSelectedKey();
+            //     var hospitalLocation = this.byId("Hospitallocation").getSelectedKey();
+            //     var hospitalLocationOther = this.byId("HL").getValue();
+            //     var billDate = this.byId("billdate").getDateValue();
+            //     var billNo = this.byId("billno").getValue();
+            //     var billAmount = this.byId("billamount").getValue();
+            //     var discount = this.byId("discount").getValue();
+            //     var requestedAmount = this.byId("requestamount").getValue();
+            //     var review = this.byId("description").getValue();
+
+            //     // Initialize an array to store the names of missing fields
+            //     var missingFields = [];
+
+            //     // Perform validation checks for missing fields
+            //     if (!doctor) missingFields.push("Doctor's Name");
+            //     if (!patientId) missingFields.push("Patient ID");
+            //     if (!hospitalStore) missingFields.push("Hospital/Medical Store");
+            //     if (!hospitalLocation) missingFields.push("Hospital Location");
+            //     if (!billDate) missingFields.push("Bill Date");
+            //     if (!billNo) missingFields.push("Bill No");
+            //     if (!billAmount) missingFields.push("Bill Amount(Rs)");
+            //     if (!requestedAmount) missingFields.push("Requested Amount");
+
+            //     // Check if any fields are missing
+            //     if (missingFields.length > 0) {
+            //         // Display an error message with the list of missing fields
+            //         var errorMessage = "Please fill in the following required fields:\n" + missingFields.join("\n");
+            //         MessageBox.error(errorMessage);
+            //         return;
+            //     }
+
+            //     fetch("./odata/v4/my/validations(endDate=" + enddate + ",startDate=" + startdate + ",requestedAmount=" + requestedAmount + `,category='` + category + `')`, {
+            //         method: "GET"
+            //     })
+            //         .then(response => {
+            //             if (!response.ok) {
+            //                 throw new Error('Network response was not ok');
+            //             }
+            //             return response.json();
+            //         })
+            //         .then(data => {
+            //             if (data.value.success) {
+            //                 if (requestedAmount > data.value.finalAmount) {
+            //                     var eligibleAmountMessage = "Your eligible amount is: " + data.value.finalAmount;
+            //                     MessageBox.information(eligibleAmountMessage, {
+            //                         onClose: function (oAction) {
+            //                             if (oAction === MessageBox.Action.OK) {
+            //                                 var details = {
+            //                                     category: category,
+            //                                     doctor: doctor,
+            //                                     patientId: patientId,
+            //                                     hospitalStore: hospitalStore,
+            //                                     hospitalLocation: hospitalLocation,
+            //                                     hospitalLocationOther: hospitalLocationOther,
+            //                                     billDate: billDate,
+            //                                     billNo: billNo,
+            //                                     billAmount: billAmount,
+            //                                     discount: discount,
+            //                                     requestedAmount: data.value.finalAmount,
+            //                                     review: review,
+            //                                 };
+            //                                 var detailsModel = this.getView().getModel("claimModel");
+            //                                 if (!detailsModel) {
+            //                                     detailsModel = new sap.ui.model.json.JSONModel();
+            //                                     this.getView().setModel(detailsModel, "claimModel");
+            //                                 }
+            //                                 var allDetails = detailsModel.getProperty("/allDetails") || [];
+            //                                 allDetails.push(details);
+            //                                 detailsModel.setProperty("/allDetails", allDetails);
+            //                                 this.clearForm();
+            //                                 this.updateTotalRequestedAmount();
+            //                             }
+            //                         }.bind(this)
+            //                     });
+            //                 } else {
+            //                     var details = {
+            //                         category: category,
+            //                         doctor: doctor,
+            //                         patientId: patientId,
+            //                         hospitalStore: hospitalStore,
+            //                         hospitalLocation: hospitalLocation,
+            //                         hospitalLocationOther: hospitalLocationOther,
+            //                         billDate: billDate,
+            //                         billNo: billNo,
+            //                         billAmount: billAmount,
+            //                         discount: discount,
+            //                         requestedAmount: requestedAmount,
+            //                         review: review,
+            //                     };
+            //                     var detailsModel = this.getView().getModel("claimModel");
+            //                     if (!detailsModel) {
+            //                         detailsModel = new sap.ui.model.json.JSONModel();
+            //                         this.getView().setModel(detailsModel, "claimModel");
+            //                     }
+            //                     var allDetails = detailsModel.getProperty("/allDetails") || [];
+            //                     allDetails.push(details);
+            //                     detailsModel.setProperty("/allDetails", allDetails);
+            //                     this.clearForm();
+            //                     this.updateTotalRequestedAmount();
+            //                 }
+            //             } else {
+            //                 MessageBox.information(data.value.message);
+            //             }
+            //         })
+            //         .catch(error => {
+            //             MessageBox.error("Error occurred while fetching data");
+            //             console.error('Error:', error);
+            //         });
+            // },
             addPress: function () {
                 // Get all the form values
+                var category = this.byId("consultancycategorys").getSelectedKey();
+            
+                // Check if category is selected
+                if (!category) {
+                    MessageBox.error("Please select a category.");
+                    return;
+                }
+            
+                // Get other form values
                 var startDate = this.byId("startDatePicker1").getDateValue();
                 var startdatewithstring = startDate.toISOString();
                 var startdate = startdatewithstring.split('T')[0];
                 var endDate = this.byId("endDatePicker1").getDateValue();
                 var endsatewithstring = endDate.toISOString();
                 var enddate = endsatewithstring.split('T')[0];
-
-                var category = this.byId("consultancycategorys").getSelectedKey();
                 var doctor = this.byId("DN").getValue();
                 var patientId = this.byId("ID").getValue();
                 var hospitalStore = this.byId("HospitalStore").getSelectedKey();
@@ -360,10 +499,10 @@ sap.ui.define([
                 var discount = this.byId("discount").getValue();
                 var requestedAmount = this.byId("requestamount").getValue();
                 var review = this.byId("description").getValue();
-
+            
                 // Initialize an array to store the names of missing fields
                 var missingFields = [];
-
+            
                 // Perform validation checks for missing fields
                 if (!doctor) missingFields.push("Doctor's Name");
                 if (!patientId) missingFields.push("Patient ID");
@@ -373,7 +512,7 @@ sap.ui.define([
                 if (!billNo) missingFields.push("Bill No");
                 if (!billAmount) missingFields.push("Bill Amount(Rs)");
                 if (!requestedAmount) missingFields.push("Requested Amount");
-
+            
                 // Check if any fields are missing
                 if (missingFields.length > 0) {
                     // Display an error message with the list of missing fields
@@ -381,86 +520,103 @@ sap.ui.define([
                     MessageBox.error(errorMessage);
                     return;
                 }
-
+            
+                // Perform validation
                 fetch("./odata/v4/my/validations(endDate=" + enddate + ",startDate=" + startdate + ",requestedAmount=" + requestedAmount + `,category='` + category + `')`, {
-                    method: "GET"
+                            method: "GET"
+                        })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
                 })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.value.success) {
-                            if (requestedAmount > data.value.finalAmount) {
-                                var eligibleAmountMessage = "Your eligible amount is: " + data.value.finalAmount;
-                                MessageBox.information(eligibleAmountMessage, {
-                                    onClose: function (oAction) {
-                                        if (oAction === MessageBox.Action.OK) {
-                                            var details = {
-                                                category: category,
-                                                doctor: doctor,
-                                                patientId: patientId,
-                                                hospitalStore: hospitalStore,
-                                                hospitalLocation: hospitalLocation,
-                                                hospitalLocationOther: hospitalLocationOther,
-                                                billDate: billDate,
-                                                billNo: billNo,
-                                                billAmount: billAmount,
-                                                discount: discount,
-                                                requestedAmount: data.value.finalAmount,
-                                                review: review,
-                                            };
-                                            var detailsModel = this.getView().getModel("claimModel");
-                                            if (!detailsModel) {
-                                                detailsModel = new sap.ui.model.json.JSONModel();
-                                                this.getView().setModel(detailsModel, "claimModel");
-                                            }
-                                            var allDetails = detailsModel.getProperty("/allDetails") || [];
-                                            allDetails.push(details);
-                                            detailsModel.setProperty("/allDetails", allDetails);
-                                            this.clearForm();
-                                            this.updateTotalRequestedAmount();
-                                        }
-                                    }.bind(this)
-                                });
-                            } else {
-                                var details = {
-                                    category: category,
-                                    doctor: doctor,
-                                    patientId: patientId,
-                                    hospitalStore: hospitalStore,
-                                    hospitalLocation: hospitalLocation,
-                                    hospitalLocationOther: hospitalLocationOther,
-                                    billDate: billDate,
-                                    billNo: billNo,
-                                    billAmount: billAmount,
-                                    discount: discount,
-                                    requestedAmount: requestedAmount,
-                                    review: review,
-                                };
-                                var detailsModel = this.getView().getModel("claimModel");
-                                if (!detailsModel) {
-                                    detailsModel = new sap.ui.model.json.JSONModel();
-                                    this.getView().setModel(detailsModel, "claimModel");
-                                }
-                                var allDetails = detailsModel.getProperty("/allDetails") || [];
-                                allDetails.push(details);
-                                detailsModel.setProperty("/allDetails", allDetails);
-                                this.clearForm();
-                                this.updateTotalRequestedAmount();
-                            }
+                .then(data => {
+                    if (data.value.success) {
+                        // Proceed with validation
+                        if (requestedAmount > data.value.finalAmount) {
+                            // Show information message
+                            var eligibleAmountMessage = "Your eligible amount is: " + data.value.finalAmount;
+                            MessageBox.information(eligibleAmountMessage, {
+                                onClose: function (oAction) {
+                                    if (oAction === MessageBox.Action.OK) {
+                                        // Add details to model
+                                        var details = {
+                                            category: category,
+                                            doctor: doctor,
+                                            patientId: patientId,
+                                            hospitalStore: hospitalStore,
+                                            hospitalLocation: hospitalLocation,
+                                            hospitalLocationOther: hospitalLocationOther,
+                                            billDate: billDate,
+                                            billNo: billNo,
+                                            billAmount: billAmount,
+                                            discount: discount,
+                                            requestedAmount: data.value.finalAmount,
+                                            review: review,
+                                        };
+                                        this.addDetailsToModel(details);
+                                    }
+                                }.bind(this)
+                            });
                         } else {
-                            MessageBox.information(data.value.message);
+                            // Add details to model
+                            var details = {
+                                category: category,
+                                doctor: doctor,
+                                patientId: patientId,
+                                hospitalStore: hospitalStore,
+                                hospitalLocation: hospitalLocation,
+                                hospitalLocationOther: hospitalLocationOther,
+                                billDate: billDate,
+                                billNo: billNo,
+                                billAmount: billAmount,
+                                discount: discount,
+                                requestedAmount: requestedAmount,
+                                review: review,
+                            };
+                            this.addDetailsToModel(details);
                         }
-                    })
-                    .catch(error => {
-                        MessageBox.error("Error occurred while fetching data");
-                        console.error('Error:', error);
-                    });
+                    } else {
+                        // Category not found, directly add details
+                        // Add details to model
+                        var details = {
+                            category: category,
+                            doctor: doctor,
+                            patientId: patientId,
+                            hospitalStore: hospitalStore,
+                            hospitalLocation: hospitalLocation,
+                            hospitalLocationOther: hospitalLocationOther,
+                            billDate: billDate,
+                            billNo: billNo,
+                            billAmount: billAmount,
+                            discount: discount,
+                            requestedAmount: requestedAmount,
+                            review: review,
+                        };
+                        this.addDetailsToModel(details);
+                    }
+                })
+                .catch(error => {
+                    // Show error message
+                    MessageBox.error("Error occurred while fetching data");
+                    console.error('Error:', error);
+                });
             },
-
+            
+            addDetailsToModel: function(details) {
+                var detailsModel = this.getView().getModel("claimModel");
+                if (!detailsModel) {
+                    detailsModel = new sap.ui.model.json.JSONModel();
+                    this.getView().setModel(detailsModel, "claimModel");
+                }
+                var allDetails = detailsModel.getProperty("/allDetails") || [];
+                allDetails.push(details);
+                detailsModel.setProperty("/allDetails", allDetails);
+                this.clearForm();
+                this.updateTotalRequestedAmount();
+            },
+            
 
             clearForm: function () {
                 this.byId("consultancycategorys").setSelectedKey("");
@@ -549,8 +705,39 @@ sap.ui.define([
                 // Clear the selection in the list
                 this.byId("detailsList").removeSelections();
 
-
             },
+
+            // clonePress: function () {
+            //     var list = this.byId("detailsList");
+            //     var selectedItems = list.getSelectedItems();
+            
+            //     // Check if any items are selected
+            //     if (selectedItems.length !== 1) {
+            //         MessageBox.error("Please select exactly one item to clone.");
+            //         return;
+            //     }
+            
+            //     // Get the context of the selected item
+            //     var selectedContext = selectedItems[0].getBindingContext("claimModel");
+            
+            //     // Get the data of the selected item from the model
+            //     var selectedData = selectedContext.getProperty();
+            
+            //     // Clone the data (create a shallow copy)
+            //     var clonedData = Object.assign({}, selectedData);
+            
+            //     // Format the bill date before cloning
+            //     clonedData.billDate = this.formatDate(clonedData.billDate);
+            
+            //     // Set the form values directly with the cloned data
+            //     this.setFormValues(clonedData);
+            
+            //     MessageBox.success("Item cloned successfully.");
+            
+            //     // Clear the selection in the list
+            //     this.byId("detailsList").removeSelections();
+            // },
+            
 
             setFormValues: function (details) {
                 // Set form values directly
@@ -1364,7 +1551,7 @@ sap.ui.define([
                         oChequeNumber.setEnabled(true);
                         oSettledDate.setEnabled(true);
                         oApprovedAmount.setEnabled(true);
-                        oHLRemarks.setEnabled(false);
+                        oHLRemarks.setEnabled(true);
                         break;
                   case "Claim sent back to employee":
                             oBankDetails.setEnabled(false);
@@ -1384,27 +1571,89 @@ sap.ui.define([
                 }
             },
 
-            onSearch: function(event) {
-                var searchString = event.getParameter("query");
-                var oTable = this.getView().byId("managetable");
-                var oBinding = oTable.getBinding("items");
+            // onSearch: function(event) {
+            //     var searchString = event.getParameter("query");
+            //     var oTable = this.getView().byId("managetable");
+            //     var oBinding = oTable.getBinding("items");
             
+            //     // Apply search filter
+            //     if (oBinding) {
+            //         var oFilter = new sap.ui.model.Filter([
+            //             new sap.ui.model.Filter("CLAIM_ID", sap.ui.model.FilterOperator.Contains, searchString),
+            //             new sap.ui.model.Filter("PERSON_NUMBER", sap.ui.model.FilterOperator.Contains, searchString),
+            //             new sap.ui.model.Filter("STATUS", sap.ui.model.FilterOperator.Contains, searchString),
+            //             new sap.ui.model.Filter("CLAIM_TYPE", sap.ui.model.FilterOperator.Contains, searchString),
+            //             new sap.ui.model.Filter("TREATMENT_FOR", sap.ui.model.FilterOperator.Contains, searchString),
+            //             new sap.ui.model.Filter("SELECT_DEPENDENTS", sap.ui.model.FilterOperator.Contains, searchString),
+            //             new sap.ui.model.Filter("REQUESTED_AMOUNT", sap.ui.model.FilterOperator.Contains, searchString)
+            //             // Add more filters for other fields if needed
+            //         ], false); // multiple filters are combined with OR
+            //         oBinding.filter(oFilter);
+            //     }
+            // },      
+            onSearch: function(event) {
+                var searchString = event.getParameter("newValue");
+                var oTable = this.getView().byId("managetable");
+                var aItems = oTable.getItems(); // Get all items from the table
+                
                 // Apply search filter
-                if (oBinding) {
-                    var oFilter = new sap.ui.model.Filter([
-                        new sap.ui.model.Filter("CLAIM_ID", sap.ui.model.FilterOperator.Contains, searchString),
-                        new sap.ui.model.Filter("PERSON_NUMBER", sap.ui.model.FilterOperator.Contains, searchString),
-                        new sap.ui.model.Filter("STATUS", sap.ui.model.FilterOperator.Contains, searchString),
-                        new sap.ui.model.Filter("CLAIM_TYPE", sap.ui.model.FilterOperator.Contains, searchString),
-                        new sap.ui.model.Filter("TREATMENT_FOR", sap.ui.model.FilterOperator.Contains, searchString),
-                        new sap.ui.model.Filter("SELECT_DEPENDENTS", sap.ui.model.FilterOperator.Contains, searchString),
-                        new sap.ui.model.Filter("REQUESTED_AMOUNT", sap.ui.model.FilterOperator.Contains, searchString)
-                        // Add more filters for other fields if needed
-                    ], false); // multiple filters are combined with OR
-                    oBinding.filter(oFilter);
+                if (searchString) {
+                    searchString = searchString.toLowerCase(); // Convert search string to lowercase for case-insensitive search
+                    
+                    // Iterate over each item and apply the filter
+                    aItems.forEach(function(oItem) {
+                        var bVisible = false; // Flag to track item visibility
+                        
+                        // Get cells of the item and check if any text matches the search string
+                        oItem.getCells().forEach(function(oCell) {
+                            var cellText = oCell.getText().toLowerCase(); // Convert cell text to lowercase
+                            if (cellText.includes(searchString)) {
+                                bVisible = true; // Set flag to true if search string is found
+                            }
+                        });
+                        
+                        // Set item visibility based on the flag
+                        oItem.setVisible(bVisible);
+                    });
+                } else {
+                    // If search string is empty, make all items visible
+                    aItems.forEach(function(oItem) {
+                        oItem.setVisible(true);
+                    });
                 }
-            },            
+            },
 
+            onSearchClaim: function(event) {
+                var searchString = event.getParameter("newValue");
+                var oTable = this.getView().byId("reporttable");
+                var aItems = oTable.getItems(); // Get all items from the table
+                
+                // Apply search filter
+                if (searchString) {
+                    searchString = searchString.toLowerCase(); // Convert search string to lowercase for case-insensitive search
+                    
+                    // Iterate over each item and apply the filter
+                    aItems.forEach(function(oItem) {
+                        var bVisible = false; // Flag to track item visibility
+                        
+                        // Get cells of the item and check if any text matches the search string
+                        oItem.getCells().forEach(function(oCell) {
+                            var cellText = oCell.getText().toLowerCase(); // Convert cell text to lowercase
+                            if (cellText.includes(searchString)) {
+                                bVisible = true; // Set flag to true if search string is found
+                            }
+                        });
+                        
+                        // Set item visibility based on the flag
+                        oItem.setVisible(bVisible);
+                    });
+                } else {
+                    // If search string is empty, make all items visible
+                    aItems.forEach(function(oItem) {
+                        oItem.setVisible(true);
+                    });
+                }
+            },
 
             //UPLOAD START FROM HERE//
             onBeforeInitiatingItemUpload: function (oEvent) {
