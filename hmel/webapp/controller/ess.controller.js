@@ -524,9 +524,9 @@ sap.ui.define([
                 }
 
                 // Perform validation
-                fetch("./odata/v4/my/validations(endDate=" + enddate + ",startDate=" + startdate + ",requestedAmount=" + requestedAmount + ",category='" + category + "')", {
-                    method: "GET"
-                })
+                fetch("./odata/v4/my/validations(endDate=" + enddate + ",startDate=" + startdate + ",requestedAmount=" + requestedAmount + `,category='` + category + `')`, {
+                            method: "GET"
+                        })
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
@@ -892,37 +892,61 @@ sap.ui.define([
                         if (data.value.success) {
                             // Update requestedAmount to match finalAmount from the response
                             updatedData.requestedAmount = data.value.finalAmount;
-            
+                    
                             // Proceed with the update if validation passes
                             // Update the existing item with the new data
                             Object.assign(selectedData, updatedData);
-            
+                    
                             var detailsModel = this.getView().getModel("claimModel");
                             var allDetails = detailsModel.getProperty("/allDetails");
                             var selectedIndex = selectedContext.getPath().split("/").pop();
                             allDetails[selectedIndex] = selectedData;
                             detailsModel.setProperty("/allDetails", allDetails);
-            
+                    
                             // Enable form fields after updating
                             this.enableFormFields(true);
-            
+                    
                             // Show the Add, Delete, Edit, Clone buttons, hide the Update and Cancel buttons
                             this.toggleButtonsVisibility(true, false, false, true, true);
-            
+                    
                             // Refresh the list binding to reflect the updated data
                             this.byId("detailsList").getBinding("items").refresh();
-            
+                    
                             MessageBox.success("Data updated successfully!\nYour Eligible Amount is " + data.value.finalAmount);
+                    
+                            this.clearForm();
+                            this.byId("detailsList").removeSelections();
+                    
+                            this.updateTotalRequestedAmount();
+                        } else {
+                            // Category not found, directly update it without validation
+                            // Update the existing item with the new data
+                            Object.assign(selectedData, updatedData);
+                    
+                            var detailsModel = this.getView().getModel("claimModel");
+                            var allDetails = detailsModel.getProperty("/allDetails");
+                            var selectedIndex = selectedContext.getPath().split("/").pop();
+                            allDetails[selectedIndex] = selectedData;
+                            detailsModel.setProperty("/allDetails", allDetails);
+                    
+                            // Enable form fields after updating
+                            this.enableFormFields(true);
+                    
+                            // Show the Add, Delete, Edit, Clone buttons, hide the Update and Cancel buttons
+                            this.toggleButtonsVisibility(true, false, false, true, true);
+                    
+                            // Refresh the list binding to reflect the updated data
+                            this.byId("detailsList").getBinding("items").refresh();
+
+                            MessageBox.success("Data updated successfully!");
 
                             this.clearForm();
                             this.byId("detailsList").removeSelections();
-            
+                    
                             this.updateTotalRequestedAmount();
-                        } else {
-                            // Server-side validation failed
-                            MessageBox.error("Server-side validation failed: " + data.value.errorMessage);
                         }
                     }.bind(this))
+                    
                     .catch(function (error) {
                         // Error occurred while fetching data or processing the validation
                         MessageBox.error("Error occurred while fetching or processing validation data");
