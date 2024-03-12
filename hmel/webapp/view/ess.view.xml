@@ -480,7 +480,7 @@
                                                                     id="billdate"
                                                                     width="100%"
                                                                     change="onBillDateChange"
-                                                                  displayFormat="MMM d, yyyy"
+                                                                    displayFormat="MMM d, yyyy"
                                                                 />
                                                             </VBox>
                                                             <VBox

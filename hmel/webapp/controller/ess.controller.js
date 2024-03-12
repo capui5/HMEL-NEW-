@@ -570,7 +570,7 @@ sap.ui.define([
                                 hospitalStore: hospitalStore,
                                 hospitalLocation: hospitalLocation,
                                 hospitalLocationOther: hospitalLocationOther,
-                                billDate: billdate,
+                                billDate: billDate,
                                 billNo: billNo,
                                 billAmount: billAmount,
                                 discount: discount,
@@ -589,7 +589,7 @@ sap.ui.define([
                             hospitalStore: hospitalStore,
                             hospitalLocation: hospitalLocation,
                             hospitalLocationOther: hospitalLocationOther,
-                            billDate: billdate,
+                            billDate: billDate,
                             billNo: billNo,
                             billAmount: billAmount,
                             discount: discount,
@@ -755,9 +755,6 @@ sap.ui.define([
                 this.byId("Hospitallocation").setSelectedKey(details.hospitalLocation);
                 this.byId("HL").setValue(details.hospitalLocationOther);
                 this.byId("billdate").setValue(new Date(formattedDate));
-                // var formattedDate = sap.ui.core.format.DateFormat.getDateInstance({
-                //     pattern: "MM-dd-yyyy"
-                // }).format(new Date(details.billDate));
                 this.byId("billno").setValue(details.billNo);
                 this.byId("billamount").setValue(details.billAmount);
                 this.byId("discount").setValue(details.discount);
