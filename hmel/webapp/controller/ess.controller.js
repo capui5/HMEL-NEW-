@@ -754,70 +754,6 @@ sap.ui.define([
                 this.updateTotalRequestedAmount();
             },
 
-
-            // UpdatePress: function () {
-            //     var list = this.byId("detailsList");
-            //     var selectedItems = list.getSelectedItems();
-
-            //     if (selectedItems.length !== 1) {
-            //         MessageBox.error("Please select exactly one item to update.");
-            //         return;
-            //     }
-
-            //     // Get the selected item's binding context
-            //     var selectedContext = selectedItems[0].getBindingContext("claimModel");
-
-            //     if (!selectedContext) {
-            //         MessageBox.error("No data to update.");
-            //         return;
-            //     }
-
-            //     // Get the data of the selected item from the model
-            //     var selectedData = selectedContext.getProperty();
-
-            //     // Assuming you have form fields that represent the properties you want to update
-            //     var updatedData = {
-            //         category: this.byId("consultancycategorys").getSelectedKey(),
-            //         doctor: this.byId("DN").getValue(),
-            //         patientId: this.byId("ID").getValue(),
-            //         hospitalStore: this.byId("HospitalStore").getSelectedKey(),
-            //         hospitalLocation: this.byId("Hospitallocation").getSelectedKey(),
-            //         hospitalLocationOther: this.byId("HL").getValue(),
-            //         billDate: this.byId("billdate").getDateValue(),
-            //         billNo: this.byId("billno").getValue(),
-            //         billAmount: this.byId("billamount").getValue(),
-            //         discount: this.byId("discount").getValue(),
-            //         requestedAmount: this.byId("requestamount").getValue(),
-            //         review: this.byId("description").getValue()
-
-            //     };
-
-            //     // Update the existing item with the new data
-            //     Object.assign(selectedData, updatedData);
-
-            //     // Example: Update the existing item in the model
-            //     var detailsModel = this.getView().getModel("claimModel");
-            //     var allDetails = detailsModel.getProperty("/allDetails");
-            //     var selectedIndex = selectedContext.getPath().split("/").pop();
-            //     allDetails[selectedIndex] = selectedData;
-            //     detailsModel.setProperty("/allDetails", allDetails);
-
-            //     // Enable form fields after updating
-            //     this.enableFormFields(true);
-
-            //     // Show the Add, Delete, Edit, Clone buttons, hide the Update and Cancel buttons
-            //     this.toggleButtonsVisibility(true, false, false, true, true);
-
-            //     // Refresh the list binding to reflect the updated data
-            //     this.byId("detailsList").getBinding("items").refresh();
-
-            //     MessageBox.success("Data updated successfully.");
-            //     this.clearForm();
-            //     this.byId("detailsList").removeSelections();
-
-            //     this.updateTotalRequestedAmount();
-            // },
-
             UpdatePress: function () {
                 var list = this.byId("detailsList");
                 var selectedItems = list.getSelectedItems();
@@ -912,12 +848,15 @@ sap.ui.define([
                             // Refresh the list binding to reflect the updated data
                             this.byId("detailsList").getBinding("items").refresh();
                     
-                            MessageBox.success("Data updated successfully!\nYour Eligible Amount is " + data.value.finalAmount);
+                            MessageBox.success("Data updated successfully!\nYour Eligible Amount is " + data.value.finalAmount, {
+                                onClose: function () {
+                                    // Clear the form
+                                    this.clearForm();
+                                    this.byId("detailsList").removeSelections();
+                                    this.updateTotalRequestedAmount();
+                                }.bind(this)
+                            });
                     
-                            this.clearForm();
-                            this.byId("detailsList").removeSelections();
-                    
-                            this.updateTotalRequestedAmount();
                         } else {
                             // Category not found, directly update it without validation
                             // Update the existing item with the new data
@@ -937,16 +876,17 @@ sap.ui.define([
                     
                             // Refresh the list binding to reflect the updated data
                             this.byId("detailsList").getBinding("items").refresh();
-
-                            MessageBox.success("Data updated successfully!");
-
-                            this.clearForm();
-                            this.byId("detailsList").removeSelections();
                     
-                            this.updateTotalRequestedAmount();
+                            MessageBox.success("Data updated successfully!", {
+                                onClose: function () {
+                                    // Clear the form
+                                    this.clearForm();
+                                    this.byId("detailsList").removeSelections();
+                                    this.updateTotalRequestedAmount();
+                                }.bind(this)
+                            });
                         }
                     }.bind(this))
-                    
                     .catch(function (error) {
                         // Error occurred while fetching data or processing the validation
                         MessageBox.error("Error occurred while fetching or processing validation data");
@@ -1684,26 +1624,6 @@ sap.ui.define([
                 }
             },
 
-            // onSearch: function(event) {
-            //     var searchString = event.getParameter("query");
-            //     var oTable = this.getView().byId("managetable");
-            //     var oBinding = oTable.getBinding("items");
-
-            //     // Apply search filter
-            //     if (oBinding) {
-            //         var oFilter = new sap.ui.model.Filter([
-            //             new sap.ui.model.Filter("CLAIM_ID", sap.ui.model.FilterOperator.Contains, searchString),
-            //             new sap.ui.model.Filter("PERSON_NUMBER", sap.ui.model.FilterOperator.Contains, searchString),
-            //             new sap.ui.model.Filter("STATUS", sap.ui.model.FilterOperator.Contains, searchString),
-            //             new sap.ui.model.Filter("CLAIM_TYPE", sap.ui.model.FilterOperator.Contains, searchString),
-            //             new sap.ui.model.Filter("TREATMENT_FOR", sap.ui.model.FilterOperator.Contains, searchString),
-            //             new sap.ui.model.Filter("SELECT_DEPENDENTS", sap.ui.model.FilterOperator.Contains, searchString),
-            //             new sap.ui.model.Filter("REQUESTED_AMOUNT", sap.ui.model.FilterOperator.Contains, searchString)
-            //             // Add more filters for other fields if needed
-            //         ], false); // multiple filters are combined with OR
-            //         oBinding.filter(oFilter);
-            //     }
-            // },      
             onSearch: function (event) {
                 var searchString = event.getParameter("newValue");
                 var oTable = this.getView().byId("managetable");
