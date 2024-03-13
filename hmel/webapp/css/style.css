@@ -79,7 +79,7 @@
 
 .add .sapMBtnInner {
     background-color: rgb(230, 120, 23);
-    height: 30px;
+    height: 25px;
     width: 80px;
     border: none;
 
@@ -342,7 +342,10 @@
 .Accept .sapMLabelTextWrapper{
 font-weight: 700;
 }
-
+.sapMIBar{
+    border: none;
+}
+/* sapMIBar sapMTBInactive sapMTB sapMTBNewFlex sapMTBStandard sapMTB-Auto-CTX sapMOTB */
 /* sapMIBar sapMTBInactive sapMTB sapMTBNewFlex sapMTBClear sapMTB-Auto-CTX sapMOTB */
 /* sapMTitle sapMTitleStyleAuto sapMTitleNoWrap sapUiSelectable sapMTitleMaxWidth sapMBarChild */
 /* sapMITH sapContrastPlus sapMITHBackgroundDesignSolid sapMITBTextOnly sapMITBInLine sapMITBTextOnly sapUiResponsiveContentPadding */
