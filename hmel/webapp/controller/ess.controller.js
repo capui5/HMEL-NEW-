@@ -5,13 +5,18 @@ sap.ui.define([
     "sap/m/MessageBox",
     "sap/ui/core/format/DateFormat",
     "sap/ui/model/odata/v2/ODataModel",
+    "sap/m/Button",
+    "sap/m/Text",
     "sap/m/upload/UploadSetwithTable",
     "sap/m/upload/UploadSetwithTableItem",
+ 
 
 ],
 
-    function (Controller, Device, JSONModel, MessageBox, DateFormat, ODataModel, UploadSetwithTable, UploadSetwithTableItem) {
+    function (Controller, Device, JSONModel, MessageBox, DateFormat, ODataModel,Button,Text,UploadSetwithTable, UploadSetwithTableItem,) {
         "use strict";
+
+       
 
         return Controller.extend("hmel.controller.ess", {
             onInit: function () {
@@ -1688,6 +1693,33 @@ sap.ui.define([
                 }
             },
 
+            //check box code//
+            onAcceptCheckBoxSelect: function (oEvent) {
+                var bSelected = oEvent.getParameter("selected");
+    
+                if (bSelected) {
+                    this.openAcceptMessageBox();
+                } else {
+                }
+            },
+    
+            // Function to open the MessageBox
+            openAcceptMessageBox: function () {
+                var that = this; 
+              
+                MessageBox.confirm(
+                    "Are you sure you want to accept the terms and conditions?",
+                    {
+                        onClose: function (oAction) {
+                            if (oAction === MessageBox.Action.OK) {
+                                that.getView().byId("Accept").setSelected(true);
+                            } else {
+                                that.getView().byId("Accept").setSelected(false);
+                            }
+                        }
+                    }
+                );
+            },
             //UPLOAD START FROM HERE//
             onBeforeInitiatingItemUpload: function (oEvent) {
                 // Event triggered before initiating each upload.

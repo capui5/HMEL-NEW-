@@ -339,7 +339,9 @@
     }
 }
 
-
+.Accept .sapMLabelTextWrapper{
+font-weight: 700;
+}
 
 /* sapMIBar sapMTBInactive sapMTB sapMTBNewFlex sapMTBClear sapMTB-Auto-CTX sapMOTB */
 /* sapMTitle sapMTitleStyleAuto sapMTitleNoWrap sapUiSelectable sapMTitleMaxWidth sapMBarChild */

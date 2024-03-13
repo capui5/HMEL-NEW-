@@ -563,6 +563,8 @@
                                                                 <CheckBox
                                                                     text="I Acknowledge &amp; Accept Terms and Conditions"
                                                                     id="Accept"
+                                                                    class="Accept"
+                                                                    select="onAcceptCheckBoxSelect"
                                                                 />
                                                             </VBox>
                                                         </f:fields>
